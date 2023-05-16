@@ -1,0 +1,85 @@
+\hypertarget{class_edge}{}\doxysection{Edge Class Reference}
+\label{class_edge}\index{Edge@{Edge}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_edge_ac42f6dce60386bd575558bcc1b1a9c54}\label{class_edge_ac42f6dce60386bd575558bcc1b1a9c54}} 
+{\bfseries Edge} (int src, int dest, double weight, bool valid)
+\item 
+virtual \mbox{\hyperlink{class_edge}{Edge}} $\ast$ \mbox{\hyperlink{class_edge_af005379b234ce026c4105941427d5179}{clone}} () const
+\begin{DoxyCompactList}\small\item\em creates a new pointer with a copy of the current object \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_edge_a85171955b18e6b1b6cc4597a450d6da7}\label{class_edge_a85171955b18e6b1b6cc4597a450d6da7}} 
+int {\bfseries get\+Src} () const
+\item 
+\mbox{\Hypertarget{class_edge_abaec2509b4b51681298960b180b06e25}\label{class_edge_abaec2509b4b51681298960b180b06e25}} 
+int {\bfseries get\+Dest} () const
+\item 
+\mbox{\Hypertarget{class_edge_a1caaffca117bab3ff5b7387623a356f8}\label{class_edge_a1caaffca117bab3ff5b7387623a356f8}} 
+double {\bfseries get\+Weight} () const
+\item 
+\mbox{\Hypertarget{class_edge_a30ff9f3127097db8dce20f5e8b15e6dc}\label{class_edge_a30ff9f3127097db8dce20f5e8b15e6dc}} 
+double {\bfseries get\+Flow} () const
+\item 
+\mbox{\Hypertarget{class_edge_ac9199551fe9afee1b079b9d434068532}\label{class_edge_ac9199551fe9afee1b079b9d434068532}} 
+bool {\bfseries operator$<$} (const \mbox{\hyperlink{class_edge}{Edge}} \&e) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_edge_a549898b945ce5a2513a4ac276b2a3a03}\label{class_edge_a549898b945ce5a2513a4ac276b2a3a03}} 
+bool {\bfseries valid}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_edge_ab68e788d7b8c61e0a43595627af7f4da}\label{class_edge_ab68e788d7b8c61e0a43595627af7f4da}} 
+{\bfseries Edge} (const \mbox{\hyperlink{class_edge}{Edge}} \&e)=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_edge_a9a415f211c059647d1b3af8fcf7a0e30}\label{class_edge_a9a415f211c059647d1b3af8fcf7a0e30}} 
+int {\bfseries src}
+\item 
+\mbox{\Hypertarget{class_edge_ad7df434ff7710e69f28bb31e91a35f82}\label{class_edge_ad7df434ff7710e69f28bb31e91a35f82}} 
+int {\bfseries dest}
+\item 
+\mbox{\Hypertarget{class_edge_a6d0148402e635354c03a151c77fcbdd8}\label{class_edge_a6d0148402e635354c03a151c77fcbdd8}} 
+double {\bfseries weight}
+\item 
+\mbox{\Hypertarget{class_edge_adbe59333b5a49cbb85b39ce1272e6098}\label{class_edge_adbe59333b5a49cbb85b39ce1272e6098}} 
+double {\bfseries flow}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_edge_afab89afd724f1b07b1aaad6bdc61c47a}\label{class_edge_afab89afd724f1b07b1aaad6bdc61c47a}} 
+class {\bfseries Graph}
+\item 
+\mbox{\Hypertarget{class_edge_a6eb41a867f75dfeb3cb0ba75ae4fdfcf}\label{class_edge_a6eb41a867f75dfeb3cb0ba75ae4fdfcf}} 
+class {\bfseries DGraph}
+\item 
+\mbox{\Hypertarget{class_edge_ac0e09ba350b1c8503cbdd28aa3b4a70d}\label{class_edge_ac0e09ba350b1c8503cbdd28aa3b4a70d}} 
+class {\bfseries UGraph}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_edge_af005379b234ce026c4105941427d5179}\label{class_edge_af005379b234ce026c4105941427d5179}} 
+\index{Edge@{Edge}!clone@{clone}}
+\index{clone@{clone}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_edge}{Edge}} $\ast$ Edge\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+creates a new pointer with a copy of the current object 
+
+\begin{DoxyReturn}{Returns}
+pointer with a copy of the current object 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Edge.\+hpp\end{DoxyCompactItemize}

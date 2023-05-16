@@ -1,0 +1,43 @@
+\hypertarget{_u_graph_8h_source}{}\doxysection{UGraph.\+h}
+\label{_u_graph_8h_source}\index{UGraph.h@{UGraph.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Tomás\ Sucena\ Lopes\ on\ 20/02/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GRAPH\_UGRAPH\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GRAPH\_UGRAPH\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}implementation/Graph.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ }std::list;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_u_graph}{UGraph}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_graph}{Graph}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{comment}{/*\ CONSTRUCTOR\ */}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_u_graph}{UGraph}}(\textcolor{keywordtype}{int}\ n\ =\ 0);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{/*\ METHODS\ */}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_u_graph_ab2941dac9a142fe36d1feb944053d659}{addEdge}}(\mbox{\hyperlink{class_edge}{Edge}}*\ e)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_u_graph_ab2941dac9a142fe36d1feb944053d659}{addEdge}}(\textcolor{keywordtype}{int}\ src,\ \textcolor{keywordtype}{int}\ dest,\ \textcolor{keywordtype}{double}\ weight\ =\ 1,\ \textcolor{keywordtype}{bool}\ valid\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_u_graph_a03855f597d37d4f12ee1d27820465c46}{removeEdge}}(\textcolor{keywordtype}{int}\ src,\ \textcolor{keywordtype}{int}\ dest)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_u_graph_aa639abd9fb4ba9809634306143c529f4}{isDirected}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{class_u_graph}{UGraph}}\ \mbox{\hyperlink{class_u_graph_a4d6e733d531cf719cafb2c19e3b231cd}{getSubgraph}}(list<int>\ vertexIndices);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ list<list<int>>\ \mbox{\hyperlink{class_u_graph_a47a25f023ca467d2021e0ba7d5bd917c}{getConnectedComponents}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_u_graph_abaaa08948179e3582b93f1152631a74a}{countConnectedComponents}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ list<int>\ getArticulationPoints();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ countArticulationPoints();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ list<Edge*>\ \mbox{\hyperlink{class_u_graph_accfc32e7d1b4cfe61060096e7926c91d}{getMST}}();}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GRAPH\_UGRAPH\_H}}
+
+\end{DoxyCode}

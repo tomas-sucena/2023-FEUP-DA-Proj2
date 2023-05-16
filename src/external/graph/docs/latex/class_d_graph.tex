@@ -1,0 +1,323 @@
+\hypertarget{class_d_graph}{}\doxysection{DGraph Class Reference}
+\label{class_d_graph}\index{DGraph@{DGraph}}
+Inheritance diagram for DGraph\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_d_graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_graph_a9a748ef26b2644761ed78977937e1057}{DGraph}} (int n=0)
+\begin{DoxyCompactList}\small\item\em creates a new directed \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_graph_a691952193f54a3c305b3afa61c1eb135}{add\+Edge}} (\mbox{\hyperlink{class_edge}{Edge}} $\ast$e) override
+\begin{DoxyCompactList}\small\item\em adds an edge to the \mbox{\hyperlink{class_graph}{Graph}}, that is, a connection between two vertices \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_graph_a5e494960c43a9bd91e4e7b8ae9c9ec01}{add\+Edge}} (int src, int dest, double weight=1, bool valid=true) override
+\begin{DoxyCompactList}\small\item\em adds an edge to the \mbox{\hyperlink{class_graph}{Graph}}, that is, a connection between two vertices \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_graph_a84906789178d4994f4afaf0124addf7c}{remove\+Edge}} (int src, int dest) override
+\begin{DoxyCompactList}\small\item\em removes an edge from the \mbox{\hyperlink{class_graph}{Graph}}, that is, eliminates the connection between two vertices \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_graph_a3885f8800d3cd6ce9b338037ac15f5b2}{is\+Directed}} () const override
+\begin{DoxyCompactList}\small\item\em indicates if the \mbox{\hyperlink{class_graph}{Graph}} is directed \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_graph}{DGraph}} \mbox{\hyperlink{class_d_graph_a76a0743fc44abf66b09bf7b80e516c6d}{get\+Subgraph}} (std\+::list$<$ int $>$ vertex\+Indices)
+\begin{DoxyCompactList}\small\item\em returns a subgraph that only contains specific vertices \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_graph_abfe6eda1ca8bac2c612635291f45ac0c}{is\+DAG}} ()
+\begin{DoxyCompactList}\small\item\em computes if a \mbox{\hyperlink{class_graph}{Graph}} is a Directed Acyclic \mbox{\hyperlink{class_graph}{Graph}} (DAG), by using the Depth-\/\+First Search algorithm \end{DoxyCompactList}\item 
+std\+::list$<$ int $>$ \mbox{\hyperlink{class_d_graph_a404275ab377fed87f91a53bc98a3bd2c}{topological\+Sort}} ()
+\begin{DoxyCompactList}\small\item\em computes one of the possible topological orders of the \mbox{\hyperlink{class_graph}{Graph}}, using Kahn\textquotesingle{}s algorithm \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_graph}{Graph}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_graph_a7b14c9bc0b5fbf50165aaf92f4aeef1d}{Graph}} (int n)
+\begin{DoxyCompactList}\small\item\em creates a new \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_graph_ae7717d8d5bdcfceb21813f26e3afe52b}{reserve}} (int n)
+\begin{DoxyCompactList}\small\item\em adds extra empty vertices to the \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_graph_a0d72c5cfb06589617db802fcb5caa85e}{add\+Vertex}} (\mbox{\hyperlink{class_vertex}{Vertex}} $\ast$v=nullptr)
+\begin{DoxyCompactList}\small\item\em adds a vertex to the \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_ae98b8a04f4927d1fd08c704ccaca28a8}{remove\+Vertex}} (int index)
+\begin{DoxyCompactList}\small\item\em removes a vertex from the \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_graph_a5c37ec8d98888755112573a13ed51e54}{add\+Edge}} (\mbox{\hyperlink{class_edge}{Edge}} $\ast$e)
+\begin{DoxyCompactList}\small\item\em adds an edge to the \mbox{\hyperlink{class_graph}{Graph}}, that is, a connection between two vertices \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_graph_a27dd4b3658405e8a2c8d121d734a7a45}{add\+Edge}} (int src, int dest, double weight, bool valid)
+\begin{DoxyCompactList}\small\item\em adds an edge to the \mbox{\hyperlink{class_graph}{Graph}}, that is, a connection between two vertices \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_graph_a29c96147c65a29dd98495278257f2337}{remove\+Edge}} (int src, int dest)
+\begin{DoxyCompactList}\small\item\em removes an edge from the \mbox{\hyperlink{class_graph}{Graph}}, that is, eliminates the connection between two vertices \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_graph_a259d8d5a3248ebfa699d2374d61f218f}{is\+Directed}} () const =0
+\item 
+bool \mbox{\hyperlink{class_graph_aaca8601903bda8aee2e3073b5c11d557}{is\+Weighted}} () const
+\begin{DoxyCompactList}\small\item\em indicates if the \mbox{\hyperlink{class_graph}{Graph}} is weighted \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_ad25cce416b52e06027cb697e8dc60f05}{count\+Vertices}} () const
+\begin{DoxyCompactList}\small\item\em returns the number of vertices that the \mbox{\hyperlink{class_graph}{Graph}} currently has \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_ae80066a55d820af224108d830b44a067}{count\+Edges}} () const
+\begin{DoxyCompactList}\small\item\em returns the number of edges that the \mbox{\hyperlink{class_graph}{Graph}} currently has \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}} $\ast$ $>$ \mbox{\hyperlink{class_graph_a1c93035dafe25d4aa7a7df598cb21a45}{get\+Vertices}} () const
+\begin{DoxyCompactList}\small\item\em returns the vector which stores the vertices of the \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+std\+::set$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{class_graph_af6afbe7f02559f780b0407e1a462361a}{get\+Edges}} () const
+\begin{DoxyCompactList}\small\item\em returns the set which stores the edges of the \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_vertex}{Vertex}} \& \mbox{\hyperlink{class_graph_ae3a8894ff96bfb9d3f123472711923f5}{operator\mbox{[}$\,$\mbox{]}}} (int index)
+\begin{DoxyCompactList}\small\item\em accesses a vertex of the \mbox{\hyperlink{class_graph}{Graph}} and allows modifications to be made to it \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_graph_ad34b447e80298b11560234c4cca45a0e}{are\+Connected}} (int src, int dest) const
+\begin{DoxyCompactList}\small\item\em verifies if there exists an edge that connects two vertices \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_graph_a030e2b1ee680f69e77b9ae6f7182fa17}{eccentricity}} (int index, std\+::list$<$ int $>$ $\ast$farthest=nullptr)
+\item 
+double \mbox{\hyperlink{class_graph_a969d4830611913cd033edd0c4163b153}{diameter}} (std\+::list$<$ std\+::pair$<$ int, int $>$ $>$ $\ast$farthest=nullptr)
+\item 
+double \mbox{\hyperlink{class_graph_ad3c947aebb4639924cb75ac253c45a73}{distance}} (int src, int dest)
+\begin{DoxyCompactList}\small\item\em calculates the minimum distance between two vertices \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_path}{Path}} \mbox{\hyperlink{class_graph_a768278f45d354ad527f80525e57b7777}{get\+Shortest\+Path}} (int src, int dest)
+\begin{DoxyCompactList}\small\item\em calculates (one of) the shortest path between two vertices \end{DoxyCompactList}\item 
+std\+::list$<$ \mbox{\hyperlink{class_path}{Path}} $>$ \mbox{\hyperlink{class_graph_aa0b0e2f3c3a0f31c44df0530ad85abfc}{get\+Shortest\+Paths}} (int src, int dest)
+\begin{DoxyCompactList}\small\item\em calculates ALL the shortest paths between two vertices \end{DoxyCompactList}\item 
+std\+::list$<$ int $>$ \mbox{\hyperlink{class_graph_a22f889405b3ee46c135fb424c44169bd}{get\+Reachable}} (int src, double dist, bool weighted=true)
+\begin{DoxyCompactList}\small\item\em calculates which vertices can be reached in a given distance from a source vertex, using an implementation of the Breadth-\/\+First Search algorithm \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_graph_a746653e1b37d61666b9538c051d5f990}{maximum\+Flow}} (int src, int sink, std\+::list$<$ \mbox{\hyperlink{class_path}{Path}} $>$ $\ast$aug\+Paths=nullptr)
+\begin{DoxyCompactList}\small\item\em computes the maximum flow between two vertices using an implementation of the Edmonds-\/\+Karp algorithm \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_d_graph_ad1de95805494aba3aa87a8a5fe4b2a4f}{dfs}} (int src, u\+Set$<$ int $>$ $\ast$seen=nullptr)
+\begin{DoxyCompactList}\small\item\em recursive implementation of the Depth-\/\+First Search algorithm, which traverses the graph in search of cycles \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_graph}{Graph}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_graph_ade87f76fa19fbbc149df13561c3a19de}{reset\+Vertices}} ()
+\begin{DoxyCompactList}\small\item\em validates all the vertices \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_a69a08f310b14de95133b2439e5ea4d81}{reset\+Edges}} ()
+\begin{DoxyCompactList}\small\item\em validates all the edges \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_a30dc5b4c8fcddfe62446b13be0ce15f0}{reset\+All}} ()
+\begin{DoxyCompactList}\small\item\em validates all the vertices and edges \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_graph_a083acc2dd4423be2962ab009b915078c}{valid\+Index}} (int index) const
+\item 
+std\+::list$<$ int $>$ \mbox{\hyperlink{class_graph_aa59eefe30edf439d484d371acc2b3a45}{bfs}} (int src)
+\begin{DoxyCompactList}\small\item\em implementation of the Breadth-\/\+First Search algorithm, which traverses the graph \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_path}{Path}} \mbox{\hyperlink{class_graph_a88a58b0d055f44f4d9393020cd38a9e5}{dijkstra}} (int src, int dest)
+\begin{DoxyCompactList}\small\item\em implementation of the Dijkstra algorithm, which finds the shortest path between two vertices in a \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+std\+::list$<$ \mbox{\hyperlink{class_path}{Path}} $>$ \mbox{\hyperlink{class_graph_a572e0420eb05e56389ada720ec018f2c}{bfs}} (int src, int dest)
+\begin{DoxyCompactList}\small\item\em implementation of the Breadth-\/\+First Search algorithm, which finds ALL the shortest paths between two vertices in a \mbox{\hyperlink{class_graph}{Graph}} \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_graph_aafe99f04090633007aee442d4736edc6}{edmonds\+Karp}} (int src, int sink, std\+::list$<$ \mbox{\hyperlink{class_path}{Path}} $>$ $\ast$aug\+Paths=nullptr)
+\begin{DoxyCompactList}\small\item\em implementation of the Edmonds-\/\+Karp algorithm, which computes the maximum flow between two vertices \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+\doxysubsubsection*{Public Attributes inherited from \mbox{\hyperlink{class_graph}{Graph}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_a56bb1df1898acf532527c9f4f571f600}\label{class_graph_a56bb1df1898acf532527c9f4f571f600}} 
+bool {\bfseries auto\+Reset}
+\item 
+\mbox{\Hypertarget{class_graph_a240abc813d64623e57939d65d8526a19}\label{class_graph_a240abc813d64623e57939d65d8526a19}} 
+Auto\+Reset\+Settings {\bfseries auto\+Reset\+Settings}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_graph}{Graph}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_a7b347442272d9b1f548f578278e05f20}\label{class_graph_a7b347442272d9b1f548f578278e05f20}} 
+int {\bfseries weighted}
+\item 
+\mbox{\Hypertarget{class_graph_aa837613224150e193f5a385156bf7313}\label{class_graph_aa837613224150e193f5a385156bf7313}} 
+std\+::vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}} $\ast$ $>$ {\bfseries vertices}
+\item 
+\mbox{\Hypertarget{class_graph_ac253aa5bf75bc3dcb129244957d4aeb7}\label{class_graph_ac253aa5bf75bc3dcb129244957d4aeb7}} 
+std\+::set$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$ $>$ {\bfseries edges}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_graph_a9a748ef26b2644761ed78977937e1057}\label{class_d_graph_a9a748ef26b2644761ed78977937e1057}} 
+\index{DGraph@{DGraph}!DGraph@{DGraph}}
+\index{DGraph@{DGraph}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{DGraph()}{DGraph()}}
+{\footnotesize\ttfamily DGraph\+::\+DGraph (\begin{DoxyParamCaption}\item[{int}]{n = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+creates a new directed \mbox{\hyperlink{class_graph}{Graph}} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & number of vertices that the \mbox{\hyperlink{class_graph}{Graph}} will be initialized with \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_graph_a691952193f54a3c305b3afa61c1eb135}\label{class_d_graph_a691952193f54a3c305b3afa61c1eb135}} 
+\index{DGraph@{DGraph}!addEdge@{addEdge}}
+\index{addEdge@{addEdge}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{addEdge()}{addEdge()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool DGraph\+::add\+Edge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_edge}{Edge}} $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+adds an edge to the \mbox{\hyperlink{class_graph}{Graph}}, that is, a connection between two vertices 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O(log$\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em e} & edge to be added \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textquotesingle{}true\textquotesingle{} if the insertion occurs, \textquotesingle{}false\textquotesingle{} otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_graph_a5c37ec8d98888755112573a13ed51e54}{Graph}}.
+
+\mbox{\Hypertarget{class_d_graph_a5e494960c43a9bd91e4e7b8ae9c9ec01}\label{class_d_graph_a5e494960c43a9bd91e4e7b8ae9c9ec01}} 
+\index{DGraph@{DGraph}!addEdge@{addEdge}}
+\index{addEdge@{addEdge}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{addEdge()}{addEdge()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool DGraph\+::add\+Edge (\begin{DoxyParamCaption}\item[{int}]{src,  }\item[{int}]{dest,  }\item[{double}]{weight = {\ttfamily 1},  }\item[{bool}]{valid = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+adds an edge to the \mbox{\hyperlink{class_graph}{Graph}}, that is, a connection between two vertices 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O(log$\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em src} & index of the source vertex \\
+\hline
+{\em dest} & index of the destination vertex \\
+\hline
+{\em weight} & cost of the connection \\
+\hline
+{\em valid} & bool that indicates if the edge should be considered in \mbox{\hyperlink{class_graph}{Graph}} traversals \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textquotesingle{}true\textquotesingle{} if the insertion occurs, \textquotesingle{}false\textquotesingle{} otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_graph_a27dd4b3658405e8a2c8d121d734a7a45}{Graph}}.
+
+\mbox{\Hypertarget{class_d_graph_ad1de95805494aba3aa87a8a5fe4b2a4f}\label{class_d_graph_ad1de95805494aba3aa87a8a5fe4b2a4f}} 
+\index{DGraph@{DGraph}!dfs@{dfs}}
+\index{dfs@{dfs}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{dfs()}{dfs()}}
+{\footnotesize\ttfamily bool DGraph\+::dfs (\begin{DoxyParamCaption}\item[{int}]{src,  }\item[{u\+Set$<$ int $>$ $\ast$}]{seen = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+recursive implementation of the Depth-\/\+First Search algorithm, which traverses the graph in search of cycles 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+V$\vert$ + $\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em src} & index of the vertex where the algorithm will start \\
+\hline
+{\em seen} & set containing the indices of the vertices that have been visited \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textquotesingle{}true\textquotesingle{} if the a cycle is found, \textquotesingle{}false\textquotesingle{} otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_graph_a76a0743fc44abf66b09bf7b80e516c6d}\label{class_d_graph_a76a0743fc44abf66b09bf7b80e516c6d}} 
+\index{DGraph@{DGraph}!getSubgraph@{getSubgraph}}
+\index{getSubgraph@{getSubgraph}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{getSubgraph()}{getSubgraph()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_graph}{DGraph}} DGraph\+::get\+Subgraph (\begin{DoxyParamCaption}\item[{std\+::list$<$ int $>$}]{vertex\+Indices }\end{DoxyParamCaption})}
+
+
+
+returns a subgraph that only contains specific vertices 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+V$\vert$ + $\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em vertex\+Indices} & list containing indices of the vertices to be included in the subgraph \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+subgraph containing only specific vertices 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_graph_abfe6eda1ca8bac2c612635291f45ac0c}\label{class_d_graph_abfe6eda1ca8bac2c612635291f45ac0c}} 
+\index{DGraph@{DGraph}!isDAG@{isDAG}}
+\index{isDAG@{isDAG}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{isDAG()}{isDAG()}}
+{\footnotesize\ttfamily bool DGraph\+::is\+DAG (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+computes if a \mbox{\hyperlink{class_graph}{Graph}} is a Directed Acyclic \mbox{\hyperlink{class_graph}{Graph}} (DAG), by using the Depth-\/\+First Search algorithm 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+V$\vert$ + $\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+\begin{DoxyReturn}{Returns}
+\textquotesingle{}true\textquotesingle{} if the \mbox{\hyperlink{class_graph}{Graph}} is a DAG, \textquotesingle{}false\textquotesingle{} otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_graph_a3885f8800d3cd6ce9b338037ac15f5b2}\label{class_d_graph_a3885f8800d3cd6ce9b338037ac15f5b2}} 
+\index{DGraph@{DGraph}!isDirected@{isDirected}}
+\index{isDirected@{isDirected}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{isDirected()}{isDirected()}}
+{\footnotesize\ttfamily bool DGraph\+::is\+Directed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+indicates if the \mbox{\hyperlink{class_graph}{Graph}} is directed 
+
+\begin{DoxyReturn}{Returns}
+\textquotesingle{}true\textquotesingle{} (because this is an directed \mbox{\hyperlink{class_graph}{Graph}}) 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_graph}{Graph}}.
+
+\mbox{\Hypertarget{class_d_graph_a84906789178d4994f4afaf0124addf7c}\label{class_d_graph_a84906789178d4994f4afaf0124addf7c}} 
+\index{DGraph@{DGraph}!removeEdge@{removeEdge}}
+\index{removeEdge@{removeEdge}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{removeEdge()}{removeEdge()}}
+{\footnotesize\ttfamily bool DGraph\+::remove\+Edge (\begin{DoxyParamCaption}\item[{int}]{src,  }\item[{int}]{dest }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+removes an edge from the \mbox{\hyperlink{class_graph}{Graph}}, that is, eliminates the connection between two vertices 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em src} & index of the source vertex \\
+\hline
+{\em dest} & index of the destination vertex \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\textquotesingle{}true\textquotesingle{} if the removal occurs, \textquotesingle{}false\textquotesingle{} otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_graph_a29c96147c65a29dd98495278257f2337}{Graph}}.
+
+\mbox{\Hypertarget{class_d_graph_a404275ab377fed87f91a53bc98a3bd2c}\label{class_d_graph_a404275ab377fed87f91a53bc98a3bd2c}} 
+\index{DGraph@{DGraph}!topologicalSort@{topologicalSort}}
+\index{topologicalSort@{topologicalSort}!DGraph@{DGraph}}
+\doxysubsubsection{\texorpdfstring{topologicalSort()}{topologicalSort()}}
+{\footnotesize\ttfamily std\+::list$<$ int $>$ DGraph\+::topological\+Sort (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+computes one of the possible topological orders of the \mbox{\hyperlink{class_graph}{Graph}}, using Kahn\textquotesingle{}s algorithm 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+V$\vert$ + $\vert$\+E$\vert$) 
+\end{DoxyParagraph}
+\begin{DoxyReturn}{Returns}
+list containing the topologically sorted indices of the vertices 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+DGraph.\+h\item 
+DGraph.\+cpp\end{DoxyCompactItemize}

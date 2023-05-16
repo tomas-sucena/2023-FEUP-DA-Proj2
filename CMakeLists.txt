@@ -3,24 +3,23 @@ project(FEUP_DA_Proj2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_subdirectory(graph)
-include_directories(graph/src)
+add_subdirectory(src/external/graph)
 
 set(PROJECT_HEADERS
-        graph/src/implementation/Graph.h
-        graph/src/UGraph.h
-        src/Helpy.h
-        src/libfort/fort.hpp
-        src/Reader.h
-        src/Utils.hpp)
+        src/cli/Helpy.h
+        src/external/graph/src/implementation/Graph.h
+        src/external/graph/src/UGraph.h
+        src/external/libfort/fort.hpp
+        src/utils/Reader.h
+        src/utils/Utils.hpp)
 
 set(PROJECT_SOURCES
-        graph/src/implementation/Graph.cpp
-        graph/src/UGraph.cpp
-        src/Helpy.cpp
-        src/libfort/fort.c
+        src/cli/Helpy.cpp
+        src/external/graph/src/implementation/Graph.cpp
+        src/external/graph/src/UGraph.cpp
+        src/external/libfort/fort.c
         src/main.cpp
-        src/Reader.cpp)
+        src/utils/Reader.cpp)
 
 add_executable(DA-Proj2
         ${PROJECT_HEADERS}

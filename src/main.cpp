@@ -1,8 +1,8 @@
-#include "Helpy.h"
+#include "cli/Helpy.h"
 
 int main() {
-    /*Helpy GUI = Helpy();
-    GUI.terminal();*/
+    /*Helpy CLI = Helpy();
+    CLI.terminal();*/
     std::cout << "Hey!" << std::endl;
 
     return 0;

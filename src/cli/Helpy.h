@@ -1,8 +1,8 @@
 #ifndef DA_TRAINS_HELPY_H
 #define DA_TRAINS_HELPY_H
 
-#include "Reader.h"
-#include "Utils.hpp"
+#include "../utils/Reader.h"
+#include "../utils/Utils.hpp"
 
 using std::string;
 

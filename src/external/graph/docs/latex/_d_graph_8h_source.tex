@@ -1,0 +1,42 @@
+\hypertarget{_d_graph_8h_source}{}\doxysection{DGraph.\+h}
+\label{_d_graph_8h_source}\index{DGraph.h@{DGraph.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Tomás\ Sucena\ Lopes\ on\ 20/02/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GRAPH\_DGRAPH\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GRAPH\_DGRAPH\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}implementation/Graph.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ uSet\ std::unordered\_set}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_d_graph}{DGraph}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_graph}{Graph}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{comment}{/*\ CONSTRUCTOR\ */}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_d_graph}{DGraph}}(\textcolor{keywordtype}{int}\ n\ =\ 0);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{/*\ METHODS\ */}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ search\ methods}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_d_graph_ad1de95805494aba3aa87a8a5fe4b2a4f}{dfs}}(\textcolor{keywordtype}{int}\ src,\ uSet<int>*\ seen\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_d_graph_a691952193f54a3c305b3afa61c1eb135}{addEdge}}(\mbox{\hyperlink{class_edge}{Edge}}*\ e)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_d_graph_a691952193f54a3c305b3afa61c1eb135}{addEdge}}(\textcolor{keywordtype}{int}\ src,\ \textcolor{keywordtype}{int}\ dest,\ \textcolor{keywordtype}{double}\ weight\ =\ 1,\ \textcolor{keywordtype}{bool}\ valid\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_d_graph_a84906789178d4994f4afaf0124addf7c}{removeEdge}}(\textcolor{keywordtype}{int}\ src,\ \textcolor{keywordtype}{int}\ dest)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_d_graph_a3885f8800d3cd6ce9b338037ac15f5b2}{isDirected}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{class_d_graph}{DGraph}}\ \mbox{\hyperlink{class_d_graph_a76a0743fc44abf66b09bf7b80e516c6d}{getSubgraph}}(std::list<int>\ vertexIndices);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_d_graph_abfe6eda1ca8bac2c612635291f45ac0c}{isDAG}}();}
+\DoxyCodeLine{00033\ \ \ \ \ std::list<int>\ \mbox{\hyperlink{class_d_graph_a404275ab377fed87f91a53bc98a3bd2c}{topologicalSort}}();}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GRAPH\_DGRAPH\_H}}
+
+\end{DoxyCode}

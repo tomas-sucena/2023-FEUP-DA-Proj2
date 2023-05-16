@@ -1021,7 +1021,7 @@ const void *ft_to_u8string(const ft_table_t *table);
  * characters (see http://www.unicode.org/reports/tr11/tr11-33.html) will occupy
  * 2 positions). This logic is very simple and covers wide range of cases. But
  * obviously there a lot of cases when it is not sufficient. In such cases user
- * should use some external libraries and provide an appropriate function to
+ * should use some third-party libraries and provide an appropriate function to
  * libfort.
  *
  * @param u8strwid
