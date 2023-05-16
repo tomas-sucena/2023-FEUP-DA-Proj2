@@ -16,22 +16,16 @@ using std::endl;
 #define BREAK       endl << YELLOW << DASHED_LINE << RESET << endl << endl
 #define YES_NO      " (" << GREEN << "Yes" << RESET << '/' << RED << "No" << RESET << ')'
 
-std::map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"calculate", 2},
-                                        {"calc", 2}, {"determine", 2}, {"change", 3}, {"switch", 3}};
+std::map<string, int> Helpy::command = {};
 
-std::map<string, int> Helpy::target = {{"all", 4}, {"data", 6}, {"maximum", 8},{"max", 8}, {"affected", 10},
-                                       {"operating", 12}, {"busiest", 14}, {"railway",16}};
+std::map<string, int> Helpy::target = {};
 
-std::map<string, int> Helpy::what = {{"directory", 17}, {"dir", 17}, {"train", 20}, {"trains", 20},
-                                     {"station", 23},{"stations", 23},{"district", 23},{"districts", 23},
-                                     {"municipality", 23},{"municipalities", 23}, {"pairs", 26}, {"pair", 26},
-                                     {"sources", 30}, {"source", 30},{"sinks", 33},{"sink", 33},
-                                     {"network", 36}};
+std::map<string, int> Helpy::what = {};
 
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() : reader("../data", ',') {
+Helpy::Helpy() { //: reader("../data", ',') {
     fetchData();
 }
 
@@ -40,16 +34,8 @@ Helpy::Helpy() : reader("../data", ',') {
  */
 void Helpy::fetchData() {
     // create the graph
-    graph = reader.read();
-    graph.railwaySources = reader.getRailwaySources();
-    graph.railwaySinks = reader.getRailwaySinks();
 
     // fill the data structures
-    stationIDs = reader.getStationIDs();
-    stationNames = reader.getStationNames();
-    districts = reader.getDistricts();
-    municipalities = reader.getMunicipalities();
-    trainLines = reader.getTrainLines();
 }
 
 /**
@@ -126,139 +112,6 @@ double Helpy::readNumber(const string &instruction){
     }
 
     return res;
-}
-
-/**
- * @brief reads input related to a previously printed table
- * @param ref vector containing the edges that were displayed in the table
- * @param edges list which will contain the edges to be invalidated
- */
-void Helpy::readInputFromTable(std::vector<Edge*> ref, std::list<Edge*>& edges){
-    cout << BREAK;
-    cout << "Please type the " << BOLD << "indices" << RESET << " of the " << YELLOW << "railways" << RESET
-         << " you would like to " << RED << "remove" << RESET << ", separated by a comma (ex: 1,2,7,...)."
-         << endl << endl;
-
-    string line; getline(std::cin, line);
-    line += ",";
-
-    std::istringstream line_(line);
-
-    for (string temp; getline(line_, temp, ',');){
-        int k = std::stoi(temp);
-        if (k <= 0 || k > (int) ref.size()) continue;
-
-        ref[k - 1]->valid = false;
-        edges.emplace_back(ref[k - 1]);
-    }
-}
-
-/**
- * @brief reads the name of a Station from the console
- * @complexity O(n)
- * @return the name of the Station
- */
-string Helpy::readStation(){
-    string station;
-
-    while (true){
-        cout << BREAK;
-        cout << "Please type the " << BOLD << "name" << RESET << " of the " << YELLOW << "station" << RESET << ":"
-             << endl << endl;
-
-        getline(std::cin >> std::ws, station);
-        Utils::lowercase(station);
-        
-        if (stationIDs.find(station) != stationIDs.end()){
-            break;
-        }
-
-        cout << BREAK;
-        cout << RED << "Invalid input! The station you entered does not exist. Please, try again." << RESET << endl;
-    }
-
-    return station;
-}
-
-/**
- * @brief reads a location, prints the stations that are situated there and prompts the user to choose one of them
- * @param instruction instruction that will be displayed in the console
- * @return name of the station chosen by the user
- */
-string Helpy::readLocation(const string& instruction){
-    uSet<string> options = {"name", "district", "municipality", "line"};
-    string choice = readInput(instruction, options);
-
-    if (choice == "name")
-        return readStation();
-
-    uMap<string, uSet<string>> locations;
-    if (choice == "district"){
-        locations = districts;
-    }
-    else if (choice == "municipality"){
-        locations = municipalities;
-    }
-    else{
-        choice = "train line";
-        locations = trainLines;
-    }
-
-    // read the station
-    string station;
-
-    while (true){
-        cout << BREAK;
-        cout << "Please type the " << BOLD << "name" << RESET << " of the " << YELLOW << choice << RESET << ':'
-             << endl << endl;
-
-        string line; getline(std::cin >> std::ws, line);
-        Utils::lowercase(line);
-
-        if (locations.find(line) == locations.end()){
-            cout << BREAK;
-            cout << RED << "Invalid input! The " << choice << " you entered does not exist. "
-                 << "Please, try again." << RESET << endl;
-
-            continue;
-        }
-
-        uSet<string> stations = locations[line];
-
-        if (stations.size() == 1){
-            station = *stations.begin();
-            break;
-        }
-
-        Utils::properName(line);
-
-        cout << BREAK;
-        cout << BOLD << line << RESET << " has the following " << YELLOW << "stations" << RESET << ':' << endl << endl;
-
-        for (const string& s : stations)
-            cout << "* " << s << endl;
-
-        station = readStation();
-        break;
-    }
-
-    return station;
-}
-
-/**
- * @brief reads a location, prints the stations that are situated there and prompts the user to choose one of them
- * @return name of the station chosen by the user
- */
-string Helpy::readLocation(){
-    std::ostringstream instr;
-    instr << "With which of the following would you like to define the desired " << YELLOW << "station"
-          << RESET << "?" << endl << endl
-          << "* Name" << endl
-          << "* District" << endl
-          << "* Municipality" << endl
-          << "* Line";
-
-    return readLocation(instr.str());
 }
 
 /**
@@ -425,54 +278,6 @@ e2: cout << "See you next time!" << endl << endl;
  */
 bool Helpy::process_command(string& s1, string& s2, string& s3){
     switch (command[s1] + target[s2] + what[s3]){
-        case (24) : {
-            displayDataDirectory();
-            break;
-        }
-        case (26) : {
-            changeDataDirectory();
-            break;
-        }
-        case (28) : {
-            displayAllStations();
-            break;
-        }
-        case (30) : {
-            calculateMaximumTrains();
-            break;
-        }
-        case (35) : {
-            determineAffectedStations();
-            break;
-        }
-        case (38) : {
-            displayBusiest(s3);
-            break;
-        }
-        case (41) : {
-            displayBusiestPairs();
-            break;
-        }
-        case (47) : {
-            displayRailwaySources();
-            break;
-        }
-        case (49) : {
-            changeRailwaySources();
-            break;
-        }
-        case (50) : {
-            displayRailwaySinks();
-            break;
-        }
-        case (52) : {
-            changeRailwaySinks();
-            break;
-        }
-        case (55) : {
-            changeRailwayNetwork();
-            break;
-        }
         default : {
             cout << BREAK;
             cout << RED << "Invalid command! Please, type another command." << RESET << endl;
