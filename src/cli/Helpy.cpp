@@ -200,7 +200,7 @@ b2: cout << BREAK;
         cout << BREAK;
         cout << "* Graph" << endl;
     }
-    else if (s2 == "approximation" || s2 == "backtracking" || s2 = "other"){
+    else if ((s2 == "approximation") || (s2 == "backtracking") || (s2 == "other")){
         cout << BREAK;
         cout << "* TSP" << endl;
     }
@@ -292,24 +292,37 @@ void Helpy::terminal(){
     (readInput(instruction, options) == "guided") ? guided_mode() : advanced_mode();
 }
 
+
+/**
+ * @brief allows the user to change the selected graph
+*/
 void Helpy::changeSelectedGraph() {
     //perguntar ao user qual e o grafo que ele quer e chamar o fetchData
     printf("Under Development");
     return;
 }
 
+/**
+ * @brief runs TSP with approximation on the selected graph
+*/
 void Helpy::runApproximationTSP() {
     //algoritmos ahhhhhhh
     printf("Under Development");
     return;
 }
 
+/**
+ * @brief runs TSP with BackTracking on the selected graph
+*/
 void Helpy::runBackTrackingTSP() {
     //algoritmos ahhhhhhh
     printf("Under Development");
     return;
 }
 
+/**
+ * @brief runs TSP with the other heuristic on the selected graph
+*/
 void Helpy::runOtherTSP() {
     //algoritmos ahhhhhhh
     printf("Under Development");
