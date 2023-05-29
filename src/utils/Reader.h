@@ -2,6 +2,7 @@
 #define DA_PROJ2_READER_H
 
 #include "Utils.hpp"
+#include "../network/DataGraph.h"
 
 using std::string;
 
@@ -21,11 +22,10 @@ public:
 /* METHODS */
 private:
     static void extractValue(std::string::iterator& lineIt, std::string& value, char delim);
-    void readStations(RailGraph& g);
-    void readNetwork(RailGraph& g);
+    void readEdges(DataGraph& g);
 
 public:
-    RailGraph read();
+    DataGraph read();
     std::string getPath() const;
     void setPath(std::string& path);
 
