@@ -5,8 +5,8 @@
 
 
 class DataGraph : public UGraph{
-    public:
-        DataGraph(int n);
+    public: 
+        explicit DataGraph(int n = 0);
 
 };
 

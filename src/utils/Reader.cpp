@@ -38,7 +38,7 @@ void Reader::extractValue(std::string::iterator& lineIt, std::string& value, cha
  * @param graph Undirected graph that will be modelled based on the read information
  */
 void Reader::readEdges(DataGraph& graph){
-    reader.open(path + "stations.csv");
+    reader.open(path);
     int n = 0;
 
     string line;
@@ -60,7 +60,7 @@ void Reader::readEdges(DataGraph& graph){
         // read the distance
         string distance;
         extractValue(it, distance, valueDelim);
-        double dist = stof(distance);
+        double dist = stod(distance);
 
 
         // check if the station is repeated
@@ -75,6 +75,36 @@ void Reader::readEdges(DataGraph& graph){
 
     reader.close();
     reader.clear();
+}
+
+/**
+ * @brief returns the path to the directory where the data files are stored
+ * @return path to the directory where the data files are stored
+ */
+std::string Reader::getPath() const{
+    return path;
+}
+
+/**
+ * @brief changes the path to the directory where the data files are stored
+ * @param path path to the directory where the files to be read are
+ */
+void Reader::setPath(std::string& path){
+    if (path.back() != '/')
+        path += '/';
+
+    this->path = path;
+}
+
+/**
+ * @brief reads the files that detail the graph network
+ * @return undirected graph which represents the graph network
+ */
+DataGraph Reader::read(){
+    DataGraph graph;
+    readEdges(graph);
+
+    return graph;
 }
 
 
