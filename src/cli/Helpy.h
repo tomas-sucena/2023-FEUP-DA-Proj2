@@ -32,6 +32,10 @@ private:
     bool process_command(string& s1, string& s2, string& s3);
 
     // commands
+    void changeSelectedGraph();
+    void runOtherTSP();
+    void runBackTrackingTSP();
+    void runApproximationTSP();
 
 public:
     void terminal();

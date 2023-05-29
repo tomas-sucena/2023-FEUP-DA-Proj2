@@ -249,27 +249,25 @@ e2: cout << "See you next time!" << endl << endl;
  */
 bool Helpy::process_command(string& s1, string& s2, string& s3){
     switch (command[s1] + target[s2] + what[s3]){
-        case(17){
-            //changeSelectedGraph();
+        case(17) : {
+            changeSelectedGraph();
             break;
         }
 
-        case(23){
-            //runBackTrackingTSP();
+        case(23) : {
+            runBackTrackingTSP();
             break;
         }
 
-        case(25){
-            //runApproximationTSP();
+        case(25) : {
+            runApproximationTSP();
             break;
         }
 
-        case(27){
-            //runOtherTSP();
+        case(27) : {
+            runOtherTSP();
             break;
         }
-
-        case
 
         default : {
             cout << BREAK;
@@ -292,4 +290,28 @@ void Helpy::terminal(){
     uSet<string> options = {"guided", "advanced", "adv"};
 
     (readInput(instruction, options) == "guided") ? guided_mode() : advanced_mode();
+}
+
+void Helpy::changeSelectedGraph() {
+    //perguntar ao user qual e o grafo que ele quer e chamar o fetchData
+    printf("Under Development");
+    return;
+}
+
+void Helpy::runApproximationTSP() {
+    //algoritmos ahhhhhhh
+    printf("Under Development");
+    return;
+}
+
+void Helpy::runBackTrackingTSP() {
+    //algoritmos ahhhhhhh
+    printf("Under Development");
+    return;
+}
+
+void Helpy::runOtherTSP() {
+    //algoritmos ahhhhhhh
+    printf("Under Development");
+    return;
 }
