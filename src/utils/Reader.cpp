@@ -37,8 +37,8 @@ void Reader::extractValue(std::string::iterator& lineIt, std::string& value, cha
  * @brief reads the file which contains information about the Edges
  * @param graph Undirected graph that will be modelled based on the read information
  */
-void Reader::readEdges(DataGraph& graph){
-    reader.open(path);
+void Reader::readEdges(DataGraph& graph, string type, string what){
+    reader.open(path + type + "/" + what);
     int n = 0;
 
     string line;
@@ -100,9 +100,9 @@ void Reader::setPath(std::string& path){
  * @brief reads the files that detail the graph network
  * @return undirected graph which represents the graph network
  */
-DataGraph Reader::read(){
+DataGraph Reader::read(string type, string what){
     DataGraph graph;
-    readEdges(graph);
+    readEdges(graph, type, what);
 
     return graph;
 }

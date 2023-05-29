@@ -22,10 +22,10 @@ public:
 /* METHODS */
 private:
     static void extractValue(std::string::iterator& lineIt, std::string& value, char delim);
-    void readEdges(DataGraph& g);
+    void readEdges(DataGraph& g, string type, string what);
 
 public:
-    DataGraph read();
+    DataGraph read(string type, string what);
     std::string getPath() const;
     void setPath(std::string& path);
 

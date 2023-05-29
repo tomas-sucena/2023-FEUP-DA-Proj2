@@ -3,6 +3,7 @@
 
 #include "../utils/Reader.h"
 #include "../utils/Utils.hpp"
+#include "../network/DataGraph.h"
 
 using std::string;
 
@@ -10,6 +11,7 @@ class Helpy {
 /* ATTRIBUTES */
 private:
     Reader reader;
+    DataGraph graph;
 
     // maps used to process commands
     static std::map<string, int> command, target, what;
@@ -20,7 +22,7 @@ public:
 
 /* METHODS */
 private:
-    void fetchData();
+    void fetchData(string type, string what);
 
     static string readInput(const string& instruction, uSet<string>& options);
     static double readNumber(const string& instruction);

@@ -16,25 +16,25 @@ using std::endl;
 #define BREAK       endl << YELLOW << DASHED_LINE << RESET << endl << endl
 #define YES_NO      " (" << GREEN << "Yes" << RESET << '/' << RED << "No" << RESET << ')'
 
-std::map<string, int> Helpy::command = {};
+std::map<string, int> Helpy::command = {{"change", 1}, {"run", 2}};
 
-std::map<string, int> Helpy::target = {};
+std::map<string, int> Helpy::target = {{"selected", 4}, {"backtracking", 6}, {"approximation", 8}, {"other", 10}};
 
-std::map<string, int> Helpy::what = {};
+std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
 
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() { //: reader("../data", ',') {
-    fetchData();
+Helpy::Helpy() : reader("../../data", ',', '\n') {
+    fetchData("Toy-Graphs", "shipping.csv");
 }
 
 /**
  * @brief reads and parses the data files
  */
-void Helpy::fetchData() {
+void Helpy::fetchData(string type, string what) {
     // create the graph
-
+    graph = reader.read(type, what);
     // fill the data structures
 }
 
@@ -165,10 +165,8 @@ void Helpy::guided_mode(){
 b2: cout << BREAK;
     cout << "Hello! How can I be of assistance?" << endl;
     cout << endl;
-    cout << "* Display" << endl;
-    cout << "* Calculate" << endl;
-    cout << "* Determine" << endl;
     cout << "* Change" << endl;
+    cout << "* Run" << endl;
     cout << endl;
 
     string s1, s2, s3;
@@ -176,25 +174,15 @@ b2: cout << BREAK;
 
     std::cin >> s1; Utils::lowercase(s1);
 
-    if (s1 == "display"){
+    if (s1 == "change"){
         cout << BREAK;
-        cout << "* All" << endl;
-        cout << "* Busiest" << endl;
-        cout << "* Data" << endl;
-        cout << "* Railway" << endl;
+        cout << "* Selected" << endl;
     }
-    else if (s1 == "calculate"){
+    else if (s1 == "run"){
         cout << BREAK;
-        cout << "* Maximum" << endl;
-    }
-    else if (s1 == "determine"){
-        cout << BREAK;
-        cout << "* Affected" << endl;
-    }
-    else if (s1 == "change"){
-        cout << BREAK;
-        cout << "* Data" << endl;
-        cout << "* Railway" << endl;
+        cout << "* BackTracking" << endl;
+        cout << "* Approximation" << endl;
+        cout << "* Other" << endl;
     }
     else if (s1 == "quit" || s1 == "die"){
         goto e2;
@@ -208,30 +196,13 @@ b2: cout << BREAK;
 
     std::cin >> s2; Utils::lowercase(s2);
 
-    if (s2 == "all" || s2 == "affected"){
+    if (s2 == "selected"){
         cout << BREAK;
-        cout << "* Stations" << endl;
+        cout << "* Graph" << endl;
     }
-    else if (s2 == "data"){
+    else if (s2 == "approximation" || s2 == "backtracking" || s2 = "other"){
         cout << BREAK;
-        cout << "* Directory" << endl;
-    }
-    else if (s2 == "maximum" || s2 == "max"){
-        cout << BREAK;
-        cout << "* Trains" << endl;
-    }
-    else if (s2 == "busiest"){
-        cout << BREAK;
-        cout << "* Stations" << endl;
-        cout << "* Districts" << endl;
-        cout << "* Municipalities" << endl;
-        cout << "* Pairs" << endl;
-    }
-    else if (s2 == "railway"){
-        cout << BREAK;
-        if (s1 == "change") cout << "* Network" << endl;
-        cout << "* Sources" << endl;
-        cout << "* Sinks" << endl;
+        cout << "* TSP" << endl;
     }
     else if (s2 == "quit" || s2 == "die"){
         goto e2;
@@ -278,6 +249,28 @@ e2: cout << "See you next time!" << endl << endl;
  */
 bool Helpy::process_command(string& s1, string& s2, string& s3){
     switch (command[s1] + target[s2] + what[s3]){
+        case(17){
+            //changeSelectedGraph();
+            break;
+        }
+
+        case(23){
+            //runBackTrackingTSP();
+            break;
+        }
+
+        case(25){
+            //runApproximationTSP();
+            break;
+        }
+
+        case(27){
+            //runOtherTSP();
+            break;
+        }
+
+        case
+
         default : {
             cout << BREAK;
             cout << RED << "Invalid command! Please, type another command." << RESET << endl;
