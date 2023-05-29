@@ -45,7 +45,9 @@ protected:
     // search methods
     std::list<int> bfs(int src);
     Path dijkstra(int src, int dest);
+    int dijkstraWeight(int src, int dest);
     std::list<Path> bfs(int src, int dest);
+    int backtracking(std::list<int> nodes);
 
     // flow methods
     double edmondsKarp(int src, int sink, std::list<Path>* augPaths = nullptr);

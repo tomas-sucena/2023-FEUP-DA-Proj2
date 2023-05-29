@@ -156,6 +156,75 @@ Path Graph::dijkstra(int src, int dest){
     return path;
 }
 
+int Graph::dijkstraWeight(int src, int dest){
+    (*this)[src].valid = false;
+    (*this)[src].dist = 0;
+
+    if (src == dest) return -1; // special case
+
+    DynamicPQ<Vertex> pq;
+    pq.push((*this)[src]);
+
+    std::vector<const Edge*> prev(vertices.size() + 1, nullptr);
+
+    while (!pq.empty()){
+        int curr = pq.pop().index;
+
+        if (curr == dest) break;
+
+        for (const Edge* e : (*this)[curr].out){
+            int next = e->dest;
+
+            if ((*this)[curr].dist + e->weight < (*this)[next].dist){
+                // notify the PQ that we will alter an element
+                pq.notify((*this)[next]);
+
+                (*this)[next].dist = (*this)[curr].dist + e->weight;
+                prev[next] = e;
+
+                // update the PQ
+                pq.update();
+            }
+
+            if (!(*this)[next].valid || !e->valid) continue;
+            (*this)[next].valid = false;
+
+            pq.push((*this)[next]);
+        }
+    }
+
+    // reconstruct the shortest path
+    int total_weight = 0;
+
+    for (const Edge* e = prev[dest]; e != nullptr; e = prev[e->src])
+        total_weight += e->weight;
+
+    return total_weight;
+}
+
+int Graph::backtracking(std::list<int> nodes){
+    std::sort(nodes.begin(), nodes.end());
+    int max_dist = INF;
+    int dest;
+    do {
+        int total_dist = 0;
+        int src = 0;
+        for(auto it = nodes.begin(); it != nodes.end(); it++){
+            dest = *it;
+            total_dist += dijkstraWeight(src, dest);
+            if(total_dist > max_dist) break;
+            src = dest;
+        }
+        if(total_dist < max_dist){
+            dest = 0;
+            total_dist += dijkstraWeight(src, dest);
+            if(total_dist < max_dist) max_dist = total_dist;
+        }
+    } while (std::next_permutation(nodes.begin(), nodes.end()));
+
+    return max_dist;
+}
+
 /**
  * @brief implementation of the Edmonds-Karp algorithm, which computes the maximum flow between two vertices
  * @complexity O(|V| * |E|^2)
