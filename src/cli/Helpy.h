@@ -10,7 +10,6 @@ using std::string;
 class Helpy {
 /* ATTRIBUTES */
 private:
-    Reader reader;
     DataGraph graph;
 
     // maps used to process commands

@@ -18,24 +18,19 @@ using std::endl;
 
 std::map<string, int> Helpy::command = {{"change", 1}, {"run", 2}};
 
-std::map<string, int> Helpy::target = {{"selected", 4}, {"backtracking", 6}, {"approximation", 8}, {"other", 10}};
+std::map<string, int> Helpy::target = {{"selected", 4}, {"current", 4}, {"backtracking", 6}, {"approximation", 8}, {"other", 10}};
 
 std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
 
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() : reader("../../data", ',', '\n') {
-    fetchData("Toy-Graphs", "shipping.csv");
-}
+Helpy::Helpy() = default;
 
 /**
  * @brief reads and parses the data files
  */
 void Helpy::fetchData(string type, string what) {
-    // create the graph
-    graph = reader.read(type, what);
-    // fill the data structures
 }
 
 /**
@@ -292,14 +287,11 @@ void Helpy::terminal(){
     (readInput(instruction, options) == "guided") ? guided_mode() : advanced_mode();
 }
 
-
 /**
  * @brief allows the user to change the selected graph
 */
 void Helpy::changeSelectedGraph() {
-    //perguntar ao user qual e o grafo que ele quer e chamar o fetchData
-    printf("Under Development");
-    return;
+
 }
 
 /**
