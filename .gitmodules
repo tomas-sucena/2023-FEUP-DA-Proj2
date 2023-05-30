@@ -1,3 +1,0 @@
-[submodule "graph"]
-	path = src/external/graph
-	url = git@github.com:tomas-sucena/graph.git
