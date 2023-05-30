@@ -1,8 +1,7 @@
 #ifndef DA_PROJ2_PLACE_HPP
 #define DA_PROJ2_PLACE_HPP
 
-#include "../external/graph/src/implementation/Vertex.hpp"
-
+#include "Vertex.hpp"
 
 class Place : public Vertex {
     private:
@@ -32,8 +31,6 @@ class Place : public Vertex {
         double getLongitude() const{
             return this->longitude;
         }
-
-
 };
 
 

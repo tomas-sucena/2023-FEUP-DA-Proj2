@@ -1,7 +1,5 @@
 #include "Reader.h"
 
-#include "../network/Place.hpp"
-
 /**
  * @brief creates a Reader object
  * @param path path to the directory where the files to be read are

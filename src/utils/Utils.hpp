@@ -13,7 +13,7 @@
 #include <unordered_set>
 #include <utility>
 
-#include "../external/libfort/fort.hpp"
+#include "libfort/fort.hpp"
 
 #define uMap std::unordered_map
 #define uSet std::unordered_set

@@ -1,0 +1,3 @@
+[submodule "lib/graph"]
+	path = lib/graph
+	url = git@github.com:tomas-sucena/graph.git

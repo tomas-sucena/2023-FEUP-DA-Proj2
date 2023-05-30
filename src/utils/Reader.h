@@ -14,7 +14,6 @@ private:
     string path;
     char valueDelim, lineDelim; // delimiters
 
-
 /* CONSTRUCTOR */
 public:
     explicit Reader(std::string path, char valueDelim = ',', char lineDelim = '\n');
@@ -28,14 +27,6 @@ public:
     DataGraph read(string type, string what);
     std::string getPath() const;
     void setPath(std::string& path);
-
-    uMap<std::string, int> getStationIDs() const;
-    uMap<int, std::string> getStationNames() const;
-    uSet<int> getRailwaySources() const;
-    uSet<int> getRailwaySinks() const;
-    uMap<string, uSet<string>> getDistricts() const;
-    uMap<string, uSet<string>> getMunicipalities() const;
-    uMap<string, uSet<string>> getTrainLines() const;
 };
 
 #endif // DA_PROJ2_READER_H

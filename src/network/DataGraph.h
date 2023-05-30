@@ -1,9 +1,8 @@
 #ifndef DA_PROJ2_DATAGRAPH
 #define DA_PROJ2_DATAGRAPH
 
-#include "../external/graph/src/UGraph.h"
 #include "Place.hpp"
-
+#include "UGraph.h"
 
 class DataGraph : public UGraph{
     public: 
@@ -11,6 +10,5 @@ class DataGraph : public UGraph{
         void prim();
 
 };
-
 
 #endif

@@ -5,5 +5,5 @@
  * @param n number of vertices
  * 
 */
-DataGraph::DataGraph(int n) : UGraph(n){}
+DataGraph::DataGraph(int n) : UGraph(n) {}
 
