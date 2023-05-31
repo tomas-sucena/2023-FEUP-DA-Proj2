@@ -4,12 +4,11 @@
 #include "Place.hpp"
 #include "UGraph.h"
 
-class DataGraph : public UGraph{
-    public: 
-        explicit DataGraph(int n = 0);
-        void prim();
-        double backtracking();
-
+class DataGraph : public UGraph {
+/* METHODS */
+public:
+    explicit DataGraph(int n = 0);
+    Path backtracking();
 };
 
 #endif

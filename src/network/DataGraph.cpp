@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "DataGraph.h"
 
 /**
@@ -7,27 +9,33 @@
 */
 DataGraph::DataGraph(int n) : UGraph(n) {}
 
-double DataGraph::backtracking(){
-    std::vector<Vertex *> nodes = (*this).vertices;
-    nodes.erase(nodes.begin());
-    double max_weight = INF;
+Path DataGraph::backtracking(){
+    std::vector<Vertex *> vertices = getVertices();
+    vertices.erase(vertices.begin());
+
+    Path res;
     int dest;
+
     do {
-        int total_dist = 0;
+        Path curr;
         int src = 1;
-        for(auto it : nodes){
-            dest = it->getIndex();
-            total_dist += getShortestPath(src, dest).getWeight();
-            if(total_dist > max_weight) break;
+
+        for (const Vertex* v : vertices) {
+            dest = v->getIndex();
+            curr += getShortestPath(src, dest);
+
+            if (curr.getWeight() >= res.getWeight()) break;
             src = dest;
         }
-        if(total_dist < max_weight){
-            dest = 1;
-            total_dist += dijkstra(src, dest).getWeight();
-            if(total_dist < max_weight) max_weight = total_dist;
-        }
-    } while (std::next_permutation(nodes.begin(), nodes.end()));
 
-    return max_weight;
+        if (curr.getWeight() >= res.getWeight()) continue;
+
+        dest = 1;
+        curr += getShortestPath(src, dest);
+
+        if (curr < res) res = curr;
+    } while (std::next_permutation(vertices.begin(), vertices.end()));
+
+    return res;
 }
 
