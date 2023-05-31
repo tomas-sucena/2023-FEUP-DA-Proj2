@@ -8,6 +8,7 @@ class DataGraph : public UGraph{
     public: 
         explicit DataGraph(int n = 0);
         void prim();
+        double backtracking();
 
 };
 
