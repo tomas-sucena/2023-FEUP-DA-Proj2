@@ -5,9 +5,12 @@
 #include "UGraph.h"
 
 class DataGraph : public UGraph {
-/* METHODS */
+/* CONSTRUCTOR */
 public:
     explicit DataGraph(int n = 0);
+
+/* METHODS */
+public:
     Path backtracking();
 };
 

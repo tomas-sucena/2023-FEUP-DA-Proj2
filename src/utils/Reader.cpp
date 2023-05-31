@@ -40,7 +40,7 @@ void Reader::readEdges(DataGraph &graph, const string &path, bool hasHeader) {
     string line;
     if (hasHeader) getline(reader, line); // header
 
-    for (int i = 1; getline(reader, line); ++i){
+    while (getline(reader, line)){
         auto it = line.begin();
 
         // read the origin
@@ -58,10 +58,7 @@ void Reader::readEdges(DataGraph &graph, const string &path, bool hasHeader) {
         int src = stoi(source) + 1;
         int dest = stoi(destination) + 1;
 
-        // check if the vertex has been added
-        if (std::max(src, dest) > graph.countVertices())
-            graph.reserve(std::max(src, dest));
-
+        graph.resize(std::max(src, dest));
         graph.addEdge(src, dest, stod(distance));
     }
 

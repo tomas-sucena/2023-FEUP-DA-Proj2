@@ -116,7 +116,7 @@ double Helpy::readNumber(const string &instruction){
 /**
  * @brief executes the advanced mode of the UI
  */
-void Helpy::advanced_mode(){
+void Helpy::advancedMode(){
 b1: cout << BREAK;
     cout << "How can I be of assistance?" << endl << endl;
 
@@ -135,7 +135,7 @@ b1: cout << BREAK;
     std::cin >> s3;
     Utils::lowercase(s3);
 
-    if (!process_command(s1, s2, s3)){
+    if (!processCommand(s1, s2, s3)){
         goto b1;
     }
 
@@ -160,7 +160,7 @@ e1: cout << BREAK;
 /**
  * @brief executes the guided mode of the UI
  */
-void Helpy::guided_mode(){
+void Helpy::guidedMode(){
 b2: cout << BREAK;
     cout << "Hello! How can I be of assistance?" << endl;
     cout << endl;
@@ -187,7 +187,7 @@ b2: cout << BREAK;
         goto e2;
     }
     else { // error
-        process_command(s1, s2, s3);
+        processCommand(s1, s2, s3);
         goto b2;
     }
 
@@ -207,7 +207,7 @@ b2: cout << BREAK;
         goto e2;
     }
     else{ // error
-        process_command(s1, s2, s3);
+        processCommand(s1, s2, s3);
         goto b2;
     }
 
@@ -218,7 +218,7 @@ b2: cout << BREAK;
         goto e2;
     }
 
-    if (!process_command(s1, s2, s3)){
+    if (!processCommand(s1, s2, s3)){
         goto b2;
     }
 
@@ -246,28 +246,24 @@ e2: cout << "See you next time!" << endl << endl;
  * @param s3 third word of the command
  * @return 'true' if the command exists, 'false' otherwise
  */
-bool Helpy::process_command(string& s1, string& s2, string& s3){
+bool Helpy::processCommand(string& s1, string& s2, string& s3){
     switch (command[s1] + target[s2] + what[s3]){
         case(17) : {
             changeSelectedGraph();
             break;
         }
-
         case(23) : {
-            runBackTrackingTSP();
+            runAlgorithm(1);
             break;
         }
-
         case(25) : {
-            runApproximationTSP();
+            runAlgorithm(2);
             break;
         }
-
         case(27) : {
-            runOtherTSP();
+            runAlgorithm(3);
             break;
         }
-
         default : {
             cout << BREAK;
             cout << RED << "Invalid command! Please, type another command." << RESET << endl;
@@ -288,7 +284,32 @@ void Helpy::terminal(){
                          "* Advanced";
     uSet<string> options = {"guided", "advanced", "adv"};
 
-    (readInput(instruction, options) == "guided") ? guided_mode() : advanced_mode();
+    (readInput(instruction, options) == "guided") ? guidedMode() : advancedMode();
+}
+
+void Helpy::runAlgorithm(int n) {
+    cout << BREAK;
+
+    time_t start, end;
+    time(&start);
+
+    switch (n) {
+        case (1) : {
+            runBackTrackingTSP();
+            break;
+        }
+        case (2) : {
+            runApproximationTSP();
+            break;
+        }
+        case (3) : {
+            runOtherTSP();
+        }
+        default : break;
+    }
+
+    time(&end);
+    cout << "Execution time: " << BOLD << YELLOW << double(end - start) << 's' << RESET << '.';
 }
 
 /**
@@ -304,7 +325,7 @@ void Helpy::changeSelectedGraph() {
              << BOLD << YELLOW << "data file" << RESET << " is located:" << endl << endl;
 
         getline(std::cin >> std::ws, path);
-        path = pathToRoot + path;
+        path.insert(0, pathToRoot);
 
         // check if the file exists
         if (access(path.c_str(), 0) != -1) break;
@@ -326,25 +347,19 @@ void Helpy::changeSelectedGraph() {
 }
 
 /**
+ * @brief runs TSP with BackTracking on the selected graph
+*/
+void Helpy::runBackTrackingTSP() {
+    Path res = graph.backtracking();
+}
+
+/**
  * @brief runs TSP with approximation on the selected graph
 */
 void Helpy::runApproximationTSP() {
     //algoritmos ahhhhhhh
     printf("Under Development");
     return;
-}
-
-/**
- * @brief runs TSP with BackTracking on the selected graph
-*/
-void Helpy::runBackTrackingTSP() {
-    /*time_t start, end;
-    time(&start);
-    int res = graph.backtracking();
-    time(&end);
-    double time = end - start;
-    printf("Execution Time: %f", time);
-    return;*/
 }
 
 /**

@@ -28,9 +28,11 @@ private:
     static string readInput(const string& instruction, uSet<string>& options);
     static double readNumber(const string& instruction);
 
-    void advanced_mode();
-    void guided_mode();
-    bool process_command(string& s1, string& s2, string& s3);
+    void advancedMode();
+    void guidedMode();
+    bool processCommand(string& s1, string& s2, string& s3);
+
+    void runAlgorithm(int n);
 
     // commands
     void changeSelectedGraph();
