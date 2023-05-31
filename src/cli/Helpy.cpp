@@ -1,6 +1,4 @@
 #include "Helpy.h"
-#include <filesystem>
-namespace f = std::filesystem;
 
 using std::cout;
 using std::endl;
@@ -33,7 +31,9 @@ Helpy::Helpy() = default;
  * @brief reads and parses the data files
  */
 void Helpy::fetchData(string type, string what) {
+    Reader reader = Reader("../../data");
     graph = reader.read(type, what);
+    return;
 }
 
 
@@ -297,17 +297,40 @@ void Helpy::terminal(){
 void Helpy::changeSelectedGraph() {
     cout << BREAK;
     cout << "Please select the type of graph you would like to select: " << endl;
-    string path = "../../data";
-    for (const auto & entry : f::directory_iterator(path))
-        std::cout << entry.path() << std::endl;
+    cout << "ToyGraphs" << endl;
+    cout << "FullyConnected" << endl;
+    cout << "RealWorld" << endl;
     string type;
-    cin >> type;
-    path += type;
-    for (const auto & entry : f::directory_iterator(path))
-        cout << entry.path() << endl;
-    
+    std::cin >> type;
+    Utils::lowercase(type);
+    cout << BREAK;
+    if(type == "toygraphs"){
+        cout << "Shipping" << endl;
+        cout << "Stadiums" << endl;
+        cout << "Tourism" << endl;
+    } else if (type == "fullyconnected") {
+        cout << "edges_25" << endl;
+        cout << "edges_50" << endl;
+        cout << "edges_75" << endl;
+        cout << "edges_100" << endl;
+        cout << "edges_200" << endl;
+        cout << "edges_300" << endl;
+        cout << "edges_400" << endl;
+        cout << "edges_500" << endl;
+        cout << "edges_600" << endl;
+        cout << "edges_700" << endl;
+        cout << "edges_800" << endl;
+        cout << "edges_900" << endl;
+    } else if(type == "realworld"){
+        cout << "graph1" << endl;
+        cout << "graph2" << endl;
+        cout << "graph3" << endl;
+    } else {
+        cout << "Invalid name" << endl;
+        return changeSelectedGraph();
+    }
     string what;
-    cin >> what;
+    std::cin >> what;
     fetchData(type, what);
     return;
 }
