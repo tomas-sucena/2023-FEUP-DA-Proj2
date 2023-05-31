@@ -1,4 +1,6 @@
 #include "Helpy.h"
+#include <filesystem>
+namespace f = std::filesystem;
 
 using std::cout;
 using std::endl;
@@ -31,7 +33,9 @@ Helpy::Helpy() = default;
  * @brief reads and parses the data files
  */
 void Helpy::fetchData(string type, string what) {
+    graph = reader.read(type, what);
 }
+
 
 /**
  * @brief reads a line of user input
@@ -291,7 +295,21 @@ void Helpy::terminal(){
  * @brief allows the user to change the selected graph
 */
 void Helpy::changeSelectedGraph() {
-
+    cout << BREAK;
+    cout << "Please select the type of graph you would like to select: " << endl;
+    string path = "../../data";
+    for (const auto & entry : f::directory_iterator(path))
+        std::cout << entry.path() << std::endl;
+    string type;
+    cin >> type;
+    path += type;
+    for (const auto & entry : f::directory_iterator(path))
+        cout << entry.path() << endl;
+    
+    string what;
+    cin >> what;
+    fetchData(type, what);
+    return;
 }
 
 /**
@@ -307,8 +325,12 @@ void Helpy::runApproximationTSP() {
  * @brief runs TSP with BackTracking on the selected graph
 */
 void Helpy::runBackTrackingTSP() {
-    //algoritmos ahhhhhhh
-    printf("Under Development");
+    time_t start, end;
+    time(&start);
+    int res = graph.backtracking();
+    time(&end);
+    double time = end - start;
+    printf("Execution Time: %f", time);
     return;
 }
 
