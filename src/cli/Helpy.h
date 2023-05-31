@@ -11,6 +11,8 @@ class Helpy {
 /* ATTRIBUTES */
 private:
     DataGraph graph;
+    Reader reader;
+    string pathToRoot;
 
     // maps used to process commands
     static std::map<string, int> command, target, what;
@@ -21,7 +23,7 @@ public:
 
 /* METHODS */
 private:
-    void fetchData(string type, string what);
+    void fetchData(const string &path, bool hasHeader);
 
     static string readInput(const string& instruction, uSet<string>& options);
     static double readNumber(const string& instruction);

@@ -2,11 +2,10 @@
 
 /**
  * @brief creates a Reader object
- * @param path path to the directory where the files to be read are
+ * @param valueDelim character that delimits each value in a line
+ * @param lineDelim character that delimits each line in the file
  */
-Reader::Reader(string path, char valueDelim, char lineDelim) : valueDelim(valueDelim), lineDelim(lineDelim) {
-    setPath(path);
-}
+Reader::Reader(char valueDelim, char lineDelim) : valueDelim(valueDelim), lineDelim(lineDelim) {}
 
 /**
  * @brief extracts the next value of a CSV line
@@ -35,40 +34,35 @@ void Reader::extractValue(std::string::iterator& lineIt, std::string& value, cha
  * @brief reads the file which contains information about the Edges
  * @param graph Undirected graph that will be modelled based on the read information
  */
-void Reader::readEdges(DataGraph& graph, string type, string what){
-    reader.open(path + type + "/" + what);
-    int n = 0;
+void Reader::readEdges(DataGraph &graph, const string &path, bool hasHeader) {
+    reader.open(path);
 
     string line;
-    getline(reader, line); // header
+    if (hasHeader) getline(reader, line); // header
 
     for (int i = 1; getline(reader, line); ++i){
         auto it = line.begin();
 
         // read the origin
-        string origin;
-        extractValue(it, origin, valueDelim);
-        int ori = stoi(origin);
+        string source;
+        extractValue(it, source, valueDelim);
 
         // read the destination
         string destination;
         extractValue(it, destination, valueDelim);
-        int dest = stoi(destination);
 
         // read the distance
         string distance;
-        extractValue(it, distance, valueDelim);
-        double dist = stod(distance);
+        extractValue(it, distance, lineDelim);
 
+        int src = stoi(source) + 1;
+        int dest = stoi(destination) + 1;
 
-        // check if the station is repeated
-        if(n != ori){
-            n = ori;
-            // add the station to the graph
-            graph.addVertex(new Place(0,0));
-        }
-        graph.addEdge(ori, dest, dist);
+        // check if the vertex has been added
+        if (std::max(src, dest) > graph.countVertices())
+            graph.reserve(std::max(src, dest));
 
+        graph.addEdge(src, dest, stod(distance));
     }
 
     reader.close();
@@ -76,31 +70,12 @@ void Reader::readEdges(DataGraph& graph, string type, string what){
 }
 
 /**
- * @brief returns the path to the directory where the data files are stored
- * @return path to the directory where the data files are stored
+ * @brief reads a file which represents a graph
+ * @return undirected graph modelled after the file
  */
-std::string Reader::getPath() const{
-    return path;
-}
-
-/**
- * @brief changes the path to the directory where the data files are stored
- * @param path path to the directory where the files to be read are
- */
-void Reader::setPath(std::string& path){
-    if (path.back() != '/')
-        path += '/';
-
-    this->path = path;
-}
-
-/**
- * @brief reads the files that detail the graph network
- * @return undirected graph which represents the graph network
- */
-DataGraph Reader::read(string type, string what){
+DataGraph Reader::read(const string &path, bool hasHeader) {
     DataGraph graph;
-    readEdges(graph, type, what);
+    readEdges(graph, path, hasHeader);
 
     return graph;
 }

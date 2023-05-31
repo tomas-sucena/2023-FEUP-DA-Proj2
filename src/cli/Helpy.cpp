@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "Helpy.h"
 
 using std::cout;
@@ -25,17 +26,16 @@ std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() = default;
+Helpy::Helpy() : pathToRoot("../"), reader() {
+    fetchData("../data/Toy-Graphs/shipping.csv", true);
+}
 
 /**
  * @brief reads and parses the data files
  */
-void Helpy::fetchData(string type, string what) {
-    Reader reader = Reader("../../data");
-    graph = reader.read(type, what);
-    return;
+void Helpy::fetchData(const string& path, bool hasHeader) {
+    graph = reader.read(path, hasHeader);
 }
-
 
 /**
  * @brief reads a line of user input
@@ -295,44 +295,34 @@ void Helpy::terminal(){
  * @brief allows the user to change the selected graph
 */
 void Helpy::changeSelectedGraph() {
-    cout << BREAK;
-    cout << "Please select the type of graph you would like to select: " << endl;
-    cout << "ToyGraphs" << endl;
-    cout << "FullyConnected" << endl;
-    cout << "RealWorld" << endl;
-    string type;
-    std::cin >> type;
-    Utils::lowercase(type);
-    cout << BREAK;
-    if(type == "toygraphs"){
-        cout << "Shipping" << endl;
-        cout << "Stadiums" << endl;
-        cout << "Tourism" << endl;
-    } else if (type == "fullyconnected") {
-        cout << "edges_25" << endl;
-        cout << "edges_50" << endl;
-        cout << "edges_75" << endl;
-        cout << "edges_100" << endl;
-        cout << "edges_200" << endl;
-        cout << "edges_300" << endl;
-        cout << "edges_400" << endl;
-        cout << "edges_500" << endl;
-        cout << "edges_600" << endl;
-        cout << "edges_700" << endl;
-        cout << "edges_800" << endl;
-        cout << "edges_900" << endl;
-    } else if(type == "realworld"){
-        cout << "graph1" << endl;
-        cout << "graph2" << endl;
-        cout << "graph3" << endl;
-    } else {
-        cout << "Invalid name" << endl;
-        return changeSelectedGraph();
+    // get the file path
+    string path;
+
+    while (true) {
+        cout << BREAK;
+        cout << "Please type the " << BOLD << "relative path" << RESET << " to the directory where the "
+             << BOLD << YELLOW << "data file" << RESET << " is located:" << endl << endl;
+
+        getline(std::cin >> std::ws, path);
+        path = pathToRoot + path;
+
+        // check if the file exists
+        if (access(path.c_str(), 0) != -1) break;
+
+        cout << BREAK;
+        cout << RED << "Invalid path! Please, try again." << RESET << endl;
     }
-    string what;
-    std::cin >> what;
-    fetchData(type, what);
-    return;
+
+    // ask if the file has a header
+    bool hasHeader;
+
+    std::ostringstream instr;
+    instr << "Does your file have a " << BOLD << "header" << RESET << '?' << YES_NO;
+
+    uSet<string> options = {"yes", "no"};
+    hasHeader = (readInput(instr.str(), options) == "yes");
+
+    fetchData(path, hasHeader);
 }
 
 /**
@@ -348,13 +338,13 @@ void Helpy::runApproximationTSP() {
  * @brief runs TSP with BackTracking on the selected graph
 */
 void Helpy::runBackTrackingTSP() {
-    time_t start, end;
+    /*time_t start, end;
     time(&start);
     int res = graph.backtracking();
     time(&end);
     double time = end - start;
     printf("Execution Time: %f", time);
-    return;
+    return;*/
 }
 
 /**

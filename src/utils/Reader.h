@@ -11,22 +11,19 @@ class Reader {
 private:
     // for reading
     std::ifstream reader;
-    string path;
     char valueDelim, lineDelim; // delimiters
 
 /* CONSTRUCTOR */
 public:
-    explicit Reader(std::string path, char valueDelim = ',', char lineDelim = '\n');
+    explicit Reader(char valueDelim = ',', char lineDelim = '\n');
 
 /* METHODS */
 private:
     static void extractValue(std::string::iterator& lineIt, std::string& value, char delim);
-    void readEdges(DataGraph& g, string type, string what);
+    void readEdges(DataGraph& g, const string &path, bool hasHeader);
 
 public:
-    DataGraph read(string type, string what);
-    std::string getPath() const;
-    void setPath(std::string& path);
+    DataGraph read(const string &path, bool hasHeader);
 };
 
 #endif // DA_PROJ2_READER_H
