@@ -19,8 +19,8 @@ void DataGraph::setMatrix() {
 /**
  * @brief computes a solution to the TSP problem, using a brute-force backtracking algorithm
  * @complexity O(|V|! * |V|)
- * @param distance double which will be filled with the distance of the best path
- * @return path that represents the best path for the T
+ * @param distance double which will be store the distance of the best path
+ * @return std::list with the indices of the vertices in the order they are visited
  */
 std::list<int> DataGraph::backtracking(double &distance){
     std::list<int> bestPath;
@@ -64,3 +64,26 @@ std::list<int> DataGraph::backtracking(double &distance){
     return bestPath;
 }
 
+/**
+ * @brief computes an approximation to the TSP problem, using the triangular inequality heuristic
+ * @param distance double which will be store the distance of the best path
+ * @return std::list with the indices of the vertices in the order they are visited
+ */
+std::list<int> DataGraph::triangularInequality(double &distance) {
+    std::list<int> res = {1};
+    distance = 0;
+
+    int src = 1;
+
+    for (const Edge* e: getMST()) {
+        res.push_back(e->getDest());
+        distance += matrix[src][e->getDest()];
+
+        src = e->getDest();
+    }
+
+    res.push_back(1);
+    distance += matrix[src][1];
+
+    return res;
+}

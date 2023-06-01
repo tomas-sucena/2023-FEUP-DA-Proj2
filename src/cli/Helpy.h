@@ -36,9 +36,6 @@ private:
 
     // commands
     void changeSelectedGraph();
-    void runOtherTSP();
-    void runBackTrackingTSP();
-    void runApproximationTSP();
 
 public:
     void terminal();

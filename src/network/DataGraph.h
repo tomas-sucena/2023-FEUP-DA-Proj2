@@ -21,7 +21,10 @@ public:
 /* METHODS */
 public:
     void setMatrix();
+
+    // TSP algorithms
     std::list<int> backtracking(double &distance);
+    std::list<int> triangularInequality(double &distance);
 };
 
 #endif

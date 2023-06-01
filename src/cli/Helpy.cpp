@@ -293,20 +293,29 @@ void Helpy::runAlgorithm(int n) {
     time_t start, end;
     time(&start);
 
+    std::list<int> res;
+    double distance = 0;
+
     switch (n) {
         case (1) : {
-            runBackTrackingTSP();
+            res = graph.backtracking(distance);
             break;
         }
         case (2) : {
-            runApproximationTSP();
+            res = graph.triangularInequality(distance);
             break;
         }
         case (3) : {
-            runOtherTSP();
+            /*runOtherTSP();*/
         }
         default : break;
     }
+
+    for (int i : res)
+        cout << i - 1 << ' ';
+
+    cout << endl << BOLD << "Total distance:" << RESET << ' ' << distance
+         << endl << endl;
 
     time(&end);
     cout << BOLD << "Execution time: " << YELLOW << double(end - start) << 's' << RESET << '.'
@@ -345,36 +354,4 @@ void Helpy::changeSelectedGraph() {
     hasHeader = (readInput(instr.str(), options) == "yes");
 
     fetchData(path, hasHeader);
-}
-
-/**
- * @brief runs TSP with BackTracking on the selected graph
-*/
-void Helpy::runBackTrackingTSP() {
-    double distance;
-    std::list<int> res = graph.backtracking(distance);
-
-    for (int i : res)
-        cout << i - 1 << ' ';
-
-    cout << endl << BOLD << "Total distance:" << RESET << ' ' << distance
-         << endl << endl;
-}
-
-/**
- * @brief runs TSP with approximation on the selected graph
-*/
-void Helpy::runApproximationTSP() {
-    //algoritmos ahhhhhhh
-    printf("Under Development");
-    return;
-}
-
-/**
- * @brief runs TSP with the other heuristic on the selected graph
-*/
-void Helpy::runOtherTSP() {
-    //algoritmos ahhhhhhh
-    printf("Under Development");
-    return;
 }
