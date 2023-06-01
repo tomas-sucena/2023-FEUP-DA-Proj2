@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <stack>
 
 #include "DataGraph.h"
 
@@ -9,11 +10,34 @@
 */
 DataGraph::DataGraph(int n) : UGraph(n) {}
 
-/**
- * @brief initializes the adjacency matrix which will be used in the algorithms
- */
-void DataGraph::setMatrix() {
-    matrix = toMatrix(true);
+std::list<std::pair<int, double>> DataGraph::dfs(int src, vector<vector<double>> &dists) {
+    std::list<std::pair<int, double>> path;
+
+    std::stack<int> s;
+    s.push(src);
+
+    (*this)[src].valid = false;
+    int prev = src;
+
+    while (!s.empty()) {
+        int curr = s.top();
+        s.pop();
+
+        for (const Edge *e: (*this)[curr].outEdges()) {
+            int next = e->getDest();
+            if (!e->valid || !(*this)[next].valid) continue;
+
+            s.push(next);
+            (*this)[next].valid = false;
+        }
+
+        if (curr == prev) continue;
+
+        path.emplace_back(curr, dists[prev][curr]);
+        prev = curr;
+    }
+
+    return path;
 }
 
 /**
@@ -22,38 +46,41 @@ void DataGraph::setMatrix() {
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
-std::list<int> DataGraph::backtracking(double &distance){
-    std::list<int> bestPath;
+std::list<std::pair<int, double>> DataGraph::backtracking(int src, double &distance){
+    std::list<std::pair<int, double>> bestPath;
     distance = INF;
 
     std::vector<int> indices;
-    for (int i = 2; i <= countVertices(); ++i)
-        indices.push_back(i);
+    for (int i = 1; i <= countVertices(); ++i)
+        if (i != src) indices.push_back(i);
+
+    auto matrix = toMatrix();
 
     do {
-        int src = 1;
+        int prev = src;
 
-        std::list<int> currPath = {src};
+        std::list<std::pair<int, double>> currPath;
         double currDistance = 0;
 
-        bool finishedPath = true;
-
         for (int i : indices) {
-            currPath.push_back(i);
-            currDistance += matrix[src][i];
+            if (matrix[prev][i] < 0)
+                matrix[prev][i] = getShortestPath(prev, i).getWeight();
 
-            if (currDistance >= distance){
-                finishedPath = false;
-                break;
-            }
+            currPath.emplace_back(i, matrix[prev][i]);
+            currDistance += matrix[prev][i];
 
-            src = i;
+            if (currDistance >= distance) break;
+
+            prev = i;
         }
 
-        if (!finishedPath) continue;
+        if (currDistance >= distance) continue;
 
-        currPath.push_back(1);
-        currDistance += matrix[src][1];
+        if (matrix[prev][src] < 0)
+            matrix[prev][src] = getShortestPath(prev, src).getWeight();
+
+        currPath.emplace_back(src, matrix[prev][src]);
+        currDistance += matrix[prev][src];
 
         if (currDistance >= distance) continue;
 
@@ -69,21 +96,26 @@ std::list<int> DataGraph::backtracking(double &distance){
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
-std::list<int> DataGraph::triangularInequality(double &distance) {
-    std::list<int> res = {1};
-    distance = 0;
+std::list<std::pair<int, double>>  DataGraph::triangularInequality(int src, double &distance) {
+    std::list<Edge *> MST = getMST(src);
 
-    int src = 1;
+    // initialize the distances matrix
+    vector<vector<double>> dists(countVertices() + 1);
+    for (int i = 1; i <= countVertices(); ++i)
+        dists[i].resize(countVertices() + 1, -1);
 
-    for (const Edge* e: getMST()) {
-        res.push_back(e->getDest());
-        distance += matrix[src][e->getDest()];
+    // set up the algorithm
+    resetVertices();
+    for (Edge *e: edges)
+        e->valid = false;
 
-        src = e->getDest();
+    for (Edge *e: MST) {
+        e->valid = true;
+        dists[e->getSrc()][e->getDest()] = e->getWeight();
     }
 
-    res.push_back(1);
-    distance += matrix[src][1];
+    // compute the path
+    std::list<std::pair<int, double>> res = dfs(src, dists);
 
     return res;
 }

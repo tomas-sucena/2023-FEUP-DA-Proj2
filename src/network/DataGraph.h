@@ -10,21 +10,18 @@
 using std::vector;
 
 class DataGraph : public UGraph {
-/* ATTRIBUTES */
-private:
-    vector<vector<double>> matrix;
-
 /* CONSTRUCTOR */
 public:
     explicit DataGraph(int n = 0);
 
 /* METHODS */
-public:
-    void setMatrix();
+private:
+    std::list<std::pair<int, double>> dfs(int src, vector<vector<double>> &dists);
 
+public:
     // TSP algorithms
-    std::list<int> backtracking(double &distance);
-    std::list<int> triangularInequality(double &distance);
+    std::list<std::pair<int, double>> backtracking(int src, double &distance);
+    std::list<std::pair<int, double>> triangularInequality(int src, double &distance);
 };
 
 #endif

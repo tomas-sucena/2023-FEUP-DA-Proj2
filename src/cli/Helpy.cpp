@@ -293,16 +293,16 @@ void Helpy::runAlgorithm(int n) {
     time_t start, end;
     time(&start);
 
-    std::list<int> res;
+    std::list<std::pair<int, double>> res;
     double distance = 0;
 
     switch (n) {
         case (1) : {
-            res = graph.backtracking(distance);
+            res = graph.backtracking(1, distance);
             break;
         }
         case (2) : {
-            res = graph.triangularInequality(distance);
+            res = graph.triangularInequality(1, distance);
             break;
         }
         case (3) : {
@@ -311,8 +311,8 @@ void Helpy::runAlgorithm(int n) {
         default : break;
     }
 
-    for (int i : res)
-        cout << i - 1 << ' ';
+    for (auto &p : res)
+        cout << p.first - 1 << ' ' << p.second << endl;
 
     cout << endl << BOLD << "Total distance:" << RESET << ' ' << distance
          << endl << endl;
