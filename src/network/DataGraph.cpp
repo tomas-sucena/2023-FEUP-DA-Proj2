@@ -7,32 +7,48 @@
  * @param n number of vertices
  * 
 */
-DataGraph::DataGraph(int n) : UGraph(n) {}
+DataGraph::DataGraph(int n) : UGraph(n), matrix(nullptr) {
+    matrix = toMatrix(true);
+}
 
-Path DataGraph::backtracking(){
-    Path res;
-    double minDistance = INF;
+/**
+ * @brief destroys a DataGraph, deallocating the memory used to store its adjacency matrix
+ */
+DataGraph::~DataGraph() {
+    // delete the memoization table
+    for (int i = 0; i <= countVertices(); ++i)
+        delete[] matrix;
+
+    delete[] matrix;
+}
+
+/**
+ * @brief computes a solution to the TSP problem, using a brute-force backtracking algorithm
+ * @complexity O(|V|! * |V|)
+ * @param distance double which will be filled with the distance of the best path
+ * @return path that represents the best path for the T
+ */
+std::list<int> DataGraph::backtracking(double &distance){
+    std::list<int> bestPath;
+    distance = INF;
 
     std::vector<int> indices;
-    for (int i = 1; i <= countVertices(); ++i)
+    for (int i = 2; i <= countVertices(); ++i)
         indices.push_back(i);
 
-    // create the memoization table
-    Path paths[countVertices() + 1][countVertices() + 1];
-
     do {
-        int src = indices.front();
-        if (src > 1) break;
+        int src = 1;
 
-        Path curr;
+        std::list<int> currPath;
+        double currDistance = 0;
+
         bool finishedPath = true;
 
         for (int i : indices) {
-            if (paths[src][i].empty())
-                paths[src][i] = getShortestPath(src, i);
+            curr.push_back(i);
+            currDistance += matrix[src][i];
 
-            curr += paths[src][i];
-            if (curr.getWeight() >= minDistance){
+            if (currDistance >= minDistance){
                 finishedPath = false;
                 break;
             }
@@ -42,16 +58,15 @@ Path DataGraph::backtracking(){
 
         if (!finishedPath) continue;
 
-        if (paths[src][1].empty())
-            paths[src][1] = getShortestPath(src, 1);
+        currPath.push_back(1);
+        currDistance += matrix[src][1];
 
-        curr += paths[src][1];
-        if (curr.getWeight() >= minDistance) continue;
+        if (currDistance >= distance) continue;
 
-        res = curr;
-        minDistance = res.getWeight();
+        bestPath = currPath;
+        distance = currDistance;
     } while (std::next_permutation(indices.begin(), indices.end()));
 
-    return res;
+    return bestPath;
 }
 
