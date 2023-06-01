@@ -328,11 +328,11 @@ void Helpy::runAlgorithm(int n) {
         default : break;
     }
 
-    cout << "These are the results of my search: " << endl << endl;
-    printPath(res);
-
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+    cout << "These are the results of my search: " << endl << endl;
+    printPath(res);
 
     cout << BOLD << "Execution time: " << YELLOW << Utils::toTime(duration) << RESET
          << endl;
