@@ -46,9 +46,9 @@ std::list<std::pair<int, double>> DataGraph::dfs(int src, vector<vector<double>>
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
-std::list<std::pair<int, double>> DataGraph::backtracking(int src, double &distance){
+std::list<std::pair<int, double>> DataGraph::backtracking(int src){
     std::list<std::pair<int, double>> bestPath;
-    distance = INF;
+    double distance = INF;
 
     std::vector<int> indices;
     for (int i = 1; i <= countVertices(); ++i)
@@ -70,7 +70,6 @@ std::list<std::pair<int, double>> DataGraph::backtracking(int src, double &dista
             currDistance += matrix[prev][i];
 
             if (currDistance >= distance) break;
-
             prev = i;
         }
 
@@ -96,7 +95,7 @@ std::list<std::pair<int, double>> DataGraph::backtracking(int src, double &dista
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
-std::list<std::pair<int, double>>  DataGraph::triangularInequality(int src, double &distance) {
+std::list<std::pair<int, double>> DataGraph::triangularInequality(int src) {
     std::list<Edge *> MST = getMST(src);
 
     // initialize the distances matrix

@@ -20,8 +20,8 @@ private:
 
 public:
     // TSP algorithms
-    std::list<std::pair<int, double>> backtracking(int src, double &distance);
-    std::list<std::pair<int, double>> triangularInequality(int src, double &distance);
+    std::list<std::pair<int, double>> backtracking(int src);
+    std::list<std::pair<int, double>> triangularInequality(int src);
 };
 
 #endif

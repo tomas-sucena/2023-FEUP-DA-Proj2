@@ -26,7 +26,7 @@ public:
     * @param s string to be modified
     * @param uppercase bool that indicates if the string should be converted to uppercase
     */
-    static void lowercase(std::string& s, bool uppercase = false){
+    static void lowercase(std::string& s, bool uppercase = false) {
         for (char& c : s){
             c = (uppercase) ? (char) toupper(c) : (char) tolower(c);
         }
@@ -37,7 +37,7 @@ public:
      * @complexity O(n)
      * @param s string to be modified
      */
-    static void properName(std::string& s){
+    static void properName(std::string& s) {
         std::string name;
 
         bool first = true;
@@ -65,10 +65,10 @@ public:
     /**
      * @brief creates a fort::utf8_table that will be used to display information in the terminal
      * @param columnNames list containing the name of each column of the table
-     * @return fort::utf8_table object
+     * @return fort::char_table object
      */
-    static fort::utf8_table createTable(const std::list<std::string>& columnNames){
-        fort::utf8_table table;
+    static fort::char_table createTable(const std::list<std::string>& columnNames) {
+        fort::char_table table;
 
         table.set_border_style(FT_NICE_STYLE);
         table.row(0).set_cell_content_text_style(fort::text_style::bold);
@@ -83,6 +83,19 @@ public:
 
         table << fort::endr;
         return table;
+    }
+
+    static std::string toTime(long long duration) {
+        long long milliseconds = duration % 1000;
+        long long seconds = (duration /= 1000);
+        long long minutes = duration / 60;
+
+        std::string time;
+        if (minutes) time += std::to_string(minutes) + "min ";
+        if (seconds) time += std::to_string(seconds) + "s ";
+
+        time += std::to_string(milliseconds) + "ms";
+        return time;
     }
 };
 

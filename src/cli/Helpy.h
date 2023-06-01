@@ -32,6 +32,7 @@ private:
     void guidedMode();
     bool processCommand(string& s1, string& s2, string& s3);
 
+    static void printPath(std::list<std::pair<int, double>> &path);
     void runAlgorithm(int n);
 
     // commands

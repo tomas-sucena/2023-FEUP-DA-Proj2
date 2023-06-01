@@ -1,3 +1,4 @@
+#include <chrono>
 #include <unistd.h>
 #include "Helpy.h"
 
@@ -287,22 +288,38 @@ void Helpy::terminal(){
     (readInput(instruction, options) == "guided") ? guidedMode() : advancedMode();
 }
 
+void Helpy::printPath(std::list<std::pair<int, double>> &path) {
+    fort::char_table table = Utils::createTable({"N", "Source", "Destination", "Distance", "Total Distance"});
+
+    int prev = 0, n = 1;
+    double totalDistance = 0;
+
+    for (auto &p : path) {
+        totalDistance += p.second;
+        table << n++ << prev << (p.first - 1) << p.second << totalDistance
+              << fort::endr;
+
+        prev = p.first - 1;
+    }
+
+    cout << table.to_string();
+    cout << endl << BOLD << "Total distance:" << YELLOW << ' ' << totalDistance << RESET
+         << endl;
+}
+
 void Helpy::runAlgorithm(int n) {
     cout << BREAK;
 
-    time_t start, end;
-    time(&start);
-
     std::list<std::pair<int, double>> res;
-    double distance = 0;
+    auto start = std::chrono::high_resolution_clock::now();
 
     switch (n) {
         case (1) : {
-            res = graph.backtracking(1, distance);
+            res = graph.backtracking(1);
             break;
         }
         case (2) : {
-            res = graph.triangularInequality(1, distance);
+            res = graph.triangularInequality(1);
             break;
         }
         case (3) : {
@@ -311,14 +328,14 @@ void Helpy::runAlgorithm(int n) {
         default : break;
     }
 
-    for (auto &p : res)
-        cout << p.first - 1 << ' ' << p.second << endl;
+    cout << "These are the results of my search: " << endl << endl;
+    printPath(res);
 
-    cout << endl << BOLD << "Total distance:" << RESET << ' ' << distance
-         << endl << endl;
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    time(&end);
-    cout << BOLD << "Execution time: " << YELLOW << double(end - start) << 's' << RESET << '.'
+    cout << std::fixed << std::setprecision(3);
+    cout << BOLD << "Execution time: " << YELLOW << Utils::toTime(duration) << RESET
          << endl;
 }
 
