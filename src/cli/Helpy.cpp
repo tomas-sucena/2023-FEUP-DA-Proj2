@@ -309,7 +309,8 @@ void Helpy::runAlgorithm(int n) {
     }
 
     time(&end);
-    cout << "Execution time: " << BOLD << YELLOW << double(end - start) << 's' << RESET << '.';
+    cout << BOLD << "Execution time: " << YELLOW << double(end - start) << 's' << RESET << '.'
+         << endl;
 }
 
 /**
@@ -350,8 +351,14 @@ void Helpy::changeSelectedGraph() {
  * @brief runs TSP with BackTracking on the selected graph
 */
 void Helpy::runBackTrackingTSP() {
+    double distance;
+    std::list<int> res = graph.backtracking(distance);
 
-    Path res = graph.backtracking();
+    for (int i : res)
+        cout << i - 1 << ' ';
+
+    cout << endl << BOLD << "Total distance:" << RESET << ' ' << distance
+         << endl << endl;
 }
 
 /**

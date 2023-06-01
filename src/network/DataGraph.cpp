@@ -7,19 +7,13 @@
  * @param n number of vertices
  * 
 */
-DataGraph::DataGraph(int n) : UGraph(n), matrix(nullptr) {
-    matrix = toMatrix(true);
-}
+DataGraph::DataGraph(int n) : UGraph(n) {}
 
 /**
- * @brief destroys a DataGraph, deallocating the memory used to store its adjacency matrix
+ * @brief initializes the adjacency matrix which will be used in the algorithms
  */
-DataGraph::~DataGraph() {
-    // delete the memoization table
-    for (int i = 0; i <= countVertices(); ++i)
-        delete[] matrix;
-
-    delete[] matrix;
+void DataGraph::setMatrix() {
+    matrix = toMatrix(true);
 }
 
 /**
@@ -39,16 +33,16 @@ std::list<int> DataGraph::backtracking(double &distance){
     do {
         int src = 1;
 
-        std::list<int> currPath;
+        std::list<int> currPath = {src};
         double currDistance = 0;
 
         bool finishedPath = true;
 
         for (int i : indices) {
-            curr.push_back(i);
+            currPath.push_back(i);
             currDistance += matrix[src][i];
 
-            if (currDistance >= minDistance){
+            if (currDistance >= distance){
                 finishedPath = false;
                 break;
             }

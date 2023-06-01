@@ -2,25 +2,25 @@
 #define DA_PROJ2_DATAGRAPH
 
 #include <list>
+#include <vector>
 
 #include "Place.hpp"
 #include "UGraph.h"
 
+using std::vector;
+
 class DataGraph : public UGraph {
 /* ATTRIBUTES */
 private:
-    double **matrix;
+    vector<vector<double>> matrix;
 
 /* CONSTRUCTOR */
 public:
     explicit DataGraph(int n = 0);
 
-/* DESTRUCTOR */
-public:
-    ~DataGraph();
-
 /* METHODS */
 public:
+    void setMatrix();
     std::list<int> backtracking(double &distance);
 };
 

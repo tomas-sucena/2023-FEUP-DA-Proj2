@@ -74,6 +74,7 @@ DataGraph Reader::read(const string &path, bool hasHeader) {
     DataGraph graph;
     readEdges(graph, path, hasHeader);
 
+    graph.setMatrix();
     return graph;
 }
 
