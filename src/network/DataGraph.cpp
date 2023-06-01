@@ -33,15 +33,22 @@ std::list<std::pair<int, double>> DataGraph::dfs(int src, vector<vector<double>>
 
         if (curr == prev) continue;
 
+        if (dists[prev][curr] < 0)
+            dists[prev][curr] = getShortestPath(prev, curr).getWeight();
+
         path.emplace_back(curr, dists[prev][curr]);
         prev = curr;
     }
 
+    if (dists[prev][src] < 0)
+        dists[prev][src] = getShortestPath(prev, src).getWeight();
+
+    path.emplace_back(src, dists[prev][src]);
     return path;
 }
 
 /**
- * @brief computes a solution to the TSP problem, using a brute-force backtracking algorithm
+ * @brief computes the solution to the TSP problem, using a brute-force backtracking algorithm
  * @complexity O(|V|! * |V|)
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
@@ -100,11 +107,12 @@ std::list<std::pair<int, double>> DataGraph::triangularInequality(int src) {
 
     // initialize the distances matrix
     vector<vector<double>> dists(countVertices() + 1);
-    for (int i = 1; i <= countVertices(); ++i)
+    for (int i = 1; i <= countVertices(); ++i) {
         dists[i].resize(countVertices() + 1, -1);
+        (*this)[i].valid = true;
+    }
 
     // set up the algorithm
-    resetVertices();
     for (Edge *e: edges)
         e->valid = false;
 
@@ -114,7 +122,5 @@ std::list<std::pair<int, double>> DataGraph::triangularInequality(int src) {
     }
 
     // compute the path
-    std::list<std::pair<int, double>> res = dfs(src, dists);
-
-    return res;
+    return dfs(src, dists);
 }
