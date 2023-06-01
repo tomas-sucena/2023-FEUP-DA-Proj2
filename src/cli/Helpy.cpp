@@ -27,7 +27,7 @@ std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
  * @brief creates a new Helpy object
  */
 Helpy::Helpy() : pathToRoot("../"), reader() {
-    fetchData("../data/Toy-Graphs/shipping.csv", true);
+    fetchData("../data/Toy-Graphs/tourism.csv", true);
 }
 
 /**

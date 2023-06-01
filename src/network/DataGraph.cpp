@@ -11,42 +11,46 @@ DataGraph::DataGraph(int n) : UGraph(n) {}
 
 Path DataGraph::backtracking(){
     Path res;
-
-    std::vector<Vertex *> vertices = getVertices();
-    vertices.erase(vertices.begin());
-
-    int dest;
     double minDistance = INF;
 
-    do {
-        Path curr;
-        int src = 1;
+    std::vector<int> indices;
+    for (int i = 1; i <= countVertices(); ++i)
+        indices.push_back(i);
 
+    // create the memoization table
+    Path paths[countVertices() + 1][countVertices() + 1];
+
+    do {
+        int src = indices.front();
+        if (src > 1) break;
+
+        Path curr;
         bool finishedPath = true;
 
-        for (const Vertex* v : vertices) {
-            dest = v->getIndex();
+        for (int i : indices) {
+            if (paths[src][i].empty())
+                paths[src][i] = getShortestPath(src, i);
 
-            curr += getShortestPath(src, dest);
-
+            curr += paths[src][i];
             if (curr.getWeight() >= minDistance){
                 finishedPath = false;
                 break;
             }
 
-            src = dest;
+            src = i;
         }
 
         if (!finishedPath) continue;
 
-        dest = 1;
-        curr += getShortestPath(src, dest);
+        if (paths[src][1].empty())
+            paths[src][1] = getShortestPath(src, 1);
 
+        curr += paths[src][1];
         if (curr.getWeight() >= minDistance) continue;
 
         res = curr;
         minDistance = res.getWeight();
-    } while (std::next_permutation(vertices.begin(), vertices.end()));
+    } while (std::next_permutation(indices.begin(), indices.end()));
 
     return res;
 }
