@@ -28,7 +28,7 @@ std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
  * @brief creates a new Helpy object
  */
 Helpy::Helpy() : pathToRoot("../"), reader() {
-    fetchData("../data/Toy-Graphs/tourism.csv", false, true);
+    fetchData("../data/Toy-Graphs/tourism.csv", true);
 }
 
 /**
@@ -374,4 +374,9 @@ void Helpy::changeSelectedGraph() {
     bool hasHeader = (readInput(instr.str(), options) == "yes");
 
     fetchData(path, hasHeader);
+
+    cout << BREAK;
+    cout << BOLD << GREEN << "Done!" << RESET << " The new graph has successfully been loaded!" << endl << endl;
+    cout << BOLD << YELLOW << "Vertices loaded: " << RESET << graph.countVertices()
+         << endl << BOLD << YELLOW << "Edges loaded: " << RESET << graph.countEdges() << endl;
 }
