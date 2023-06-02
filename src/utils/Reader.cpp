@@ -31,10 +31,42 @@ void Reader::extractValue(std::string::iterator& lineIt, std::string& value, cha
 }
 
 /**
- * @brief reads the file which contains information about the Edges
- * @param graph Undirected graph that will be modelled based on the read information
+ * @brief reads the file which contains information about the vertices of the graph
+ * @param graph undirected graph that will be modelled based on the read information
  */
-void Reader::readEdges(DataGraph &graph, const string &path, bool hasHeader) {
+void Reader::readVertices(TSPGraph &graph, const string &path, bool hasHeader) {
+    reader.open(path);
+
+    string line;
+    if (hasHeader) getline(reader, line); // header
+
+    while (getline(reader, line)){
+        auto it = line.begin();
+
+        // read the id (will be ignored)
+        string _;
+        extractValue(it, _, valueDelim);
+
+        // read the destination
+        string longitude;
+        extractValue(it, longitude, valueDelim);
+
+        // read the distance
+        string latitude;
+        extractValue(it, latitude, lineDelim);
+
+        graph.addVertex(new Place(stod(latitude), stod(longitude)));
+    }
+
+    reader.close();
+    reader.clear();
+}
+
+/**
+ * @brief reads the file which contains information about the edges of the graph
+ * @param graph undirected graph that will be modelled based on the read information
+ */
+void Reader::readEdges(TSPGraph &graph, const string &path, bool hasHeader) {
     reader.open(path);
 
     string line;
@@ -68,11 +100,24 @@ void Reader::readEdges(DataGraph &graph, const string &path, bool hasHeader) {
 
 /**
  * @brief reads a file which represents a graph
+ * @param path path to the file/directory where the data files are
+ * @param twoFiles
+ * @param hasHeader
  * @return undirected graph modelled after the file
  */
-DataGraph Reader::read(const string &path, bool hasHeader) {
-    DataGraph graph;
-    readEdges(graph, path, hasHeader);
+TSPGraph Reader::read(const string &path, bool hasHeader) {
+    TSPGraph graph;
+    bool oneFile = (path.substr(path.size() - 4, 3) == ".csv");
+
+    if (oneFile) {
+        readEdges(graph, path, hasHeader);
+        return graph;
+    }
+
+    std::string path_ = (path.back() == '/') ? path : path + '/';
+
+    readVertices(graph, path_ + "nodes.csv", hasHeader);
+    readEdges(graph, path_ + "edges.csv", hasHeader);
 
     return graph;
 }

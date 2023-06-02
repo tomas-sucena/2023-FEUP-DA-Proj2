@@ -3,14 +3,14 @@
 
 #include "../utils/Reader.h"
 #include "../utils/Utils.hpp"
-#include "../network/DataGraph.h"
+#include "../network/TSPGraph.h"
 
 using std::string;
 
 class Helpy {
 /* ATTRIBUTES */
 private:
-    DataGraph graph;
+    TSPGraph graph;
     Reader reader;
     string pathToRoot;
 

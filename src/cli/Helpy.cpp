@@ -28,11 +28,13 @@ std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
  * @brief creates a new Helpy object
  */
 Helpy::Helpy() : pathToRoot("../"), reader() {
-    fetchData("../data/Toy-Graphs/tourism.csv", true);
+    fetchData("../data/Toy-Graphs/tourism.csv", false, true);
 }
 
 /**
- * @brief reads and parses the data files
+ * @brief reads and parses the data files, creating a graph that accurately models them
+ * @param path path to the file/directory where the data is stored
+ * @param twoFiles indicates if the files are split into two files (edges.csv and nodes.csv) or not
  */
 void Helpy::fetchData(const string& path, bool hasHeader) {
     graph = reader.read(path, hasHeader);
@@ -307,6 +309,10 @@ void Helpy::printPath(std::list<std::pair<int, double>> &path) {
          << endl;
 }
 
+/**
+ * @brief runs one of the TSP algorithms
+ * @param n number that indicates which algorithm should be executed
+ */
 void Helpy::runAlgorithm(int n) {
     cout << BREAK;
 
@@ -361,13 +367,11 @@ void Helpy::changeSelectedGraph() {
     }
 
     // ask if the file has a header
-    bool hasHeader;
-
     std::ostringstream instr;
     instr << "Does your file have a " << BOLD << "header" << RESET << '?' << YES_NO;
 
     uSet<string> options = {"yes", "no"};
-    hasHeader = (readInput(instr.str(), options) == "yes");
+    bool hasHeader = (readInput(instr.str(), options) == "yes");
 
     fetchData(path, hasHeader);
 }

@@ -2,7 +2,7 @@
 #define DA_PROJ2_READER_H
 
 #include "Utils.hpp"
-#include "../network/DataGraph.h"
+#include "../network/TSPGraph.h"
 
 using std::string;
 
@@ -20,10 +20,11 @@ public:
 /* METHODS */
 private:
     static void extractValue(std::string::iterator& lineIt, std::string& value, char delim);
-    void readEdges(DataGraph& g, const string &path, bool hasHeader);
+    void readVertices(TSPGraph &g, const string &path, bool hasHeader);
+    void readEdges(TSPGraph &g, const string &path, bool hasHeader);
 
 public:
-    DataGraph read(const string &path, bool hasHeader);
+    TSPGraph read(const string &path, bool hasHeader);
 };
 
 #endif // DA_PROJ2_READER_H

@@ -13,7 +13,7 @@ set(PROJECT_HEADERS
         lib/graph/src/Graph.h
         lib/libfort/fort.hpp
         src/cli/Helpy.h
-        src/network/DataGraph.h
+        src/network/TSPGraph.h
         src/network/Place.hpp
         src/utils/Reader.h
         src/utils/Utils.hpp)
@@ -23,7 +23,7 @@ set(PROJECT_SOURCES
         lib/graph/src/Graph.cpp
         lib/libfort/fort.c
         src/cli/Helpy.cpp
-        src/network/DataGraph.cpp
+        src/network/TSPGraph.cpp
         src/main.cpp
         src/utils/Reader.cpp)
 

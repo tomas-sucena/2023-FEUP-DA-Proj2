@@ -9,10 +9,14 @@
 
 using std::vector;
 
-class DataGraph : public UGraph {
+class TSPGraph : public UGraph {
+/* ATTRIBUTES */
+private:
+    bool isReal;
+
 /* CONSTRUCTOR */
 public:
-    explicit DataGraph(int n = 0);
+    explicit TSPGraph(int n = 0, bool isReal = false);
 
 /* METHODS */
 private:

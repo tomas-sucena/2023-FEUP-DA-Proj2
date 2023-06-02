@@ -1,16 +1,16 @@
 #include <algorithm>
 #include <stack>
 
-#include "DataGraph.h"
+#include "TSPGraph.h"
 
 /**
- * @brief creates a new DataGraph
+ * @brief creates a new TSPGraph
  * @param n number of vertices
- * 
+ * @param isReal indicates if the graph represents real world locations
 */
-DataGraph::DataGraph(int n) : UGraph(n) {}
+TSPGraph::TSPGraph(int n, bool isReal) : UGraph(n), isReal(isReal) {}
 
-std::list<std::pair<int, double>> DataGraph::dfs(int src, vector<vector<double>> &dists) {
+std::list<std::pair<int, double>> TSPGraph::dfs(int src, vector<vector<double>> &dists) {
     std::list<std::pair<int, double>> path;
 
     std::stack<int> s;
@@ -53,7 +53,7 @@ std::list<std::pair<int, double>> DataGraph::dfs(int src, vector<vector<double>>
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
-std::list<std::pair<int, double>> DataGraph::backtracking(int src){
+std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
     std::list<std::pair<int, double>> bestPath;
     double distance = INF;
 
@@ -102,7 +102,7 @@ std::list<std::pair<int, double>> DataGraph::backtracking(int src){
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
-std::list<std::pair<int, double>> DataGraph::triangularInequality(int src) {
+std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     std::list<Edge *> MST = getMST(src);
 
     // initialize the distances matrix

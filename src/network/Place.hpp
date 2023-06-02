@@ -28,14 +28,14 @@ class Place : public Vertex {
          * @brief getter for Place latitude
         */
         double getLatitude() const{
-            return this->latitude;
+            return latitude;
         }
 
         /**
          * @brief getter for Place longitude
         */
         double getLongitude() const{
-            return this->longitude;
+            return longitude;
         }
 };
 
