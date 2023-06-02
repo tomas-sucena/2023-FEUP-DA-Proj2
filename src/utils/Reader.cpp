@@ -106,8 +106,8 @@ void Reader::readEdges(TSPGraph &graph, const string &path, bool hasHeader) {
  * @return undirected graph modelled after the file
  */
 TSPGraph Reader::read(const string &path, bool hasHeader) {
-    TSPGraph graph;
     bool oneFile = (path.substr(path.size() - 4, 3) == ".csv");
+    TSPGraph graph(!oneFile); // if it has two files, it is one of the Real-Graphs
 
     if (oneFile) {
         readEdges(graph, path, hasHeader);

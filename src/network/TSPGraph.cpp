@@ -1,14 +1,46 @@
 #include <algorithm>
+#include <math.h>
 #include <stack>
 
 #include "TSPGraph.h"
 
 /**
  * @brief creates a new TSPGraph
- * @param n number of vertices
  * @param isReal indicates if the graph represents real world locations
 */
-TSPGraph::TSPGraph(int n, bool isReal) : UGraph(n), isReal(isReal) {}
+TSPGraph::TSPGraph(bool isReal) : UGraph(0), isReal(isReal) {}
+
+/**
+ * @brief calculates the great-circle distance between two vertices, using Haversine's formula
+ * @param src index of the source vertex
+ * @param dest index of the destination vertex
+ * @return distance between the two vertices
+ */
+double TSPGraph::haversine(int src, int dest) {
+    if (!isReal) return INF;
+
+    auto &lhs = (Place &) (*this)[src];
+    auto &rhs = (Place &) (*this)[dest];
+
+    double srcLat = lhs.getLatitude();
+    double destLat = rhs.getLatitude();
+
+    double dLat = (rhs.getLatitude() - lhs.getLatitude());
+    double dLong = (rhs.getLongitude() - lhs.getLongitude());
+
+    // convert to radians
+    srcLat *= M_PI / 180;
+    destLat *= M_PI / 180;
+    dLat *= M_PI / 180;
+    dLong *= M_PI / 180;
+
+    // apply formula
+    double haver = pow(sin(dLat / 2), 2) + pow(sin(dLong / 2), 2) *
+                   cos(srcLat) * cos(destLat);
+    double sine = 2 * asin(sqrt(haver));
+
+    return 6371 * sine; // 6371 -> Earth's radius
+}
 
 std::list<std::pair<int, double>> TSPGraph::dfs(int src, vector<vector<double>> &dists) {
     std::list<std::pair<int, double>> path;
@@ -34,14 +66,16 @@ std::list<std::pair<int, double>> TSPGraph::dfs(int src, vector<vector<double>> 
         if (curr == prev) continue;
 
         if (dists[prev][curr] < 0)
-            dists[prev][curr] = getShortestPath(prev, curr).getWeight();
+            dists[prev][curr] = isReal ? haversine(prev, curr)
+                                       : distance(prev, curr);
 
         path.emplace_back(curr, dists[prev][curr]);
         prev = curr;
     }
 
     if (dists[prev][src] < 0)
-        dists[prev][src] = getShortestPath(prev, src).getWeight();
+        dists[prev][src] = isReal ? haversine(prev, src)
+                                  : distance(prev, src);
 
     path.emplace_back(src, dists[prev][src]);
     return path;
@@ -55,7 +89,7 @@ std::list<std::pair<int, double>> TSPGraph::dfs(int src, vector<vector<double>> 
  */
 std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
     std::list<std::pair<int, double>> bestPath;
-    double distance = INF;
+    double minDistance = INF;
 
     std::vector<int> indices;
     for (int i = 1; i <= countVertices(); ++i)
@@ -71,27 +105,27 @@ std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
 
         for (int i : indices) {
             if (matrix[prev][i] < 0)
-                matrix[prev][i] = getShortestPath(prev, i).getWeight();
+                matrix[prev][i] = distance(prev, i);
 
             currPath.emplace_back(i, matrix[prev][i]);
             currDistance += matrix[prev][i];
 
-            if (currDistance >= distance) break;
+            if (currDistance >= minDistance) break;
             prev = i;
         }
 
-        if (currDistance >= distance) continue;
+        if (currDistance >= minDistance) continue;
 
         if (matrix[prev][src] < 0)
-            matrix[prev][src] = getShortestPath(prev, src).getWeight();
+            matrix[prev][src] = distance(prev, src);
 
         currPath.emplace_back(src, matrix[prev][src]);
         currDistance += matrix[prev][src];
 
-        if (currDistance >= distance) continue;
+        if (currDistance >= minDistance) continue;
 
         bestPath = currPath;
-        distance = currDistance;
+        minDistance = currDistance;
     } while (std::next_permutation(indices.begin(), indices.end()));
 
     return bestPath;

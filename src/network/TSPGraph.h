@@ -16,10 +16,11 @@ private:
 
 /* CONSTRUCTOR */
 public:
-    explicit TSPGraph(int n = 0, bool isReal = false);
+    explicit TSPGraph(bool isReal = false);
 
 /* METHODS */
 private:
+    double haversine(int src, int dest);
     std::list<std::pair<int, double>> dfs(int src, vector<vector<double>> &dists);
 
 public:
