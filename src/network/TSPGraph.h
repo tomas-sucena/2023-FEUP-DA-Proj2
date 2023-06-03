@@ -26,6 +26,7 @@ public:
     // TSP algorithms
     std::list<std::pair<int, double>> backtracking(int src);
     std::list<std::pair<int, double>> triangularInequality(int src);
+    void twoopt(std::vector<Edge*> path);
 };
 
 #endif
