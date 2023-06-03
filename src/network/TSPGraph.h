@@ -27,6 +27,7 @@ public:
     std::list<std::pair<int, double>> backtracking(int src);
     std::list<std::pair<int, double>> triangularInequality(int src);
     std::list<std::pair<int, double>> nearestNeighbour(int src);
+    void twoopt(std::vector<Edge*> path);
 };
 
 #endif

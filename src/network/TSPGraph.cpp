@@ -149,6 +149,51 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     return path;
 }
 
+
+void twooptswap(std::list<std::pair<int, double>> path, int i, int j){
+    std::reverse(begin(path) + i + 1, begin(path) + j + 1);
+}
+
+
+void TSPGraph::twoopt(std::vector<Edge*> path){
+    auto matrix = toMatrix();
+    double curLenght = 0;
+    for(auto i : path){
+        curLenght += i->getWeight();
+    }
+    int size = path.size();
+    double (TSPGraph::*dist)(int, int) = isReal ? &TSPGraph::haversine : &TSPGraph::distance;
+    bool improved = true;
+    while(improved){
+        improved = false;
+        for(int i = 0;  i<= size-2; i++){
+            for(int j = i + 1; j < size-1;j++){
+                if(matrix[i][(i+1)%size] < 0){
+                    matrix[i][(i+1)%size] = (this->*dist)(i, (i+1)%size);
+                }
+                if(matrix[j][(j+1)%size] < 0){
+                    matrix[j][(j+1)%size] = (this->*dist)(j, (j+1)%size);
+                }
+                if(matrix[i][j] < 0){
+                    matrix[i][j] = (this->*dist)(i, j);
+                }
+                if(matrix[(i+1) % size][(j+1)%size] < 0){
+                    matrix[(i+1) % size][(j+1) % size] = (this->*dist)((i+1)%size, (j+1)%size);
+                }
+
+                double newLenght = - matrix[i][(i+1)%size] - matrix[j][(j+1)%size] + matrix[i][j] + matrix[(i+1) % size][(j+1)%size];
+
+                if(newLenght < 0){
+                    twooptswap(path, i, j);
+                    curLenght += newLenght;
+                    improved = true;
+                }
+            }
+        }
+    }
+
+    return;
+}
 std::list<std::pair<int, double>> TSPGraph::nearestNeighbour(int src) {
     std::list<std::pair<int, double>> path;
 
