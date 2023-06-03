@@ -148,3 +148,37 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     path.emplace_back(src, matrix[prev][src]);
     return path;
 }
+
+std::list<std::pair<int, double>> TSPGraph::nearestNeighbour(int src) {
+    std::list<std::pair<int, double>> path;
+
+    auto matrix = toMatrix();
+    int curr = src;
+
+    // set up the algorithm
+    resetAll();
+
+    // compute the path
+    while (path.size() < countVertices() - 1) {
+        int nearest;
+        double minDistance = INF;
+
+        (*this)[curr].valid = false;
+
+        for (const Edge *e: (*this)[curr].outEdges()) {
+            int next = e->getDest();
+
+            if (!e->valid || !(*this)[next].valid || e->getWeight() >= minDistance)
+                continue;
+
+            minDistance = e->getWeight();
+            nearest = next;
+        }
+
+        path.emplace_back(nearest, minDistance);
+        curr = nearest;
+    }
+
+    path.emplace_back(src, matrix[curr][src]);
+    return path;
+}

@@ -329,7 +329,7 @@ void Helpy::runAlgorithm(int n) {
             break;
         }
         case (3) : {
-            /*runOtherTSP();*/
+            res = graph.nearestNeighbour(1);
         }
         default : break;
     }
