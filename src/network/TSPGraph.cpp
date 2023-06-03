@@ -39,7 +39,7 @@ double TSPGraph::haversine(int src, int dest) {
                    cos(srcLat) * cos(destLat);
     double sine = 2 * asin(sqrt(haver));
 
-    return 6371 * sine; // 6371 -> Earth's radius
+    return 6371000 * sine; // 6371000 -> Earth's radius (in meters)
 }
 
 /**
