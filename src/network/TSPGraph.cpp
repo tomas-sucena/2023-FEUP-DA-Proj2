@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <math.h>
+#include <cmath>
 #include <stack>
 
 #include "TSPGraph.h"
@@ -40,45 +40,6 @@ double TSPGraph::haversine(int src, int dest) {
     double sine = 2 * asin(sqrt(haver));
 
     return 6371 * sine; // 6371 -> Earth's radius
-}
-
-std::list<std::pair<int, double>> TSPGraph::dfs(int src, vector<vector<double>> &dists) {
-    std::list<std::pair<int, double>> path;
-
-    std::stack<int> s;
-    s.push(src);
-
-    (*this)[src].valid = false;
-    int prev = src;
-
-    while (!s.empty()) {
-        int curr = s.top();
-        s.pop();
-
-        for (const Edge *e: (*this)[curr].outEdges()) {
-            int next = e->getDest();
-            if (!e->valid || !(*this)[next].valid) continue;
-
-            s.push(next);
-            (*this)[next].valid = false;
-        }
-
-        if (curr == prev) continue;
-
-        if (dists[prev][curr] < 0)
-            dists[prev][curr] = isReal ? haversine(prev, curr)
-                                       : distance(prev, curr);
-
-        path.emplace_back(curr, dists[prev][curr]);
-        prev = curr;
-    }
-
-    if (dists[prev][src] < 0)
-        dists[prev][src] = isReal ? haversine(prev, src)
-                                  : distance(prev, src);
-
-    path.emplace_back(src, dists[prev][src]);
-    return path;
 }
 
 /**
@@ -138,23 +99,49 @@ std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
  */
 std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     std::list<Edge *> MST = getMST(src);
-
-    // initialize the distances matrix
-    vector<vector<double>> dists(countVertices() + 1);
-    for (int i = 1; i <= countVertices(); ++i) {
-        dists[i].resize(countVertices() + 1, -1);
-        (*this)[i].valid = true;
-    }
+    auto matrix = toMatrix();
 
     // set up the algorithm
     for (Edge *e: edges)
         e->valid = false;
 
-    for (Edge *e: MST) {
+    for (Edge *e: MST)
         e->valid = true;
-        dists[e->getSrc()][e->getDest()] = e->getWeight();
+
+    // compute the path using DFS
+    std::list<std::pair<int, double>> path;
+    double (TSPGraph::*dist)(int, int) = isReal ? &TSPGraph::haversine : &TSPGraph::distance;
+
+    std::stack<int> s;
+    s.push(src);
+
+    (*this)[src].valid = false;
+    int prev = src;
+
+    while (!s.empty()) {
+        int curr = s.top();
+        s.pop();
+
+        for (const Edge *e: (*this)[curr].outEdges()) {
+            int next = e->getDest();
+            if (!e->valid || !(*this)[next].valid) continue;
+
+            s.push(next);
+            (*this)[next].valid = false;
+        }
+
+        if (curr == prev) continue;
+
+        if (matrix[prev][curr] < 0)
+            matrix[prev][curr] = (this->*dist)(prev, curr);
+
+        path.emplace_back(curr, matrix[prev][curr]);
+        prev = curr;
     }
 
-    // compute the path
-    return dfs(src, dists);
+    if (matrix[prev][src] < 0)
+        matrix[prev][src] = (this->*dist)(prev, src);
+
+    path.emplace_back(src, matrix[prev][src]);
+    return path;
 }

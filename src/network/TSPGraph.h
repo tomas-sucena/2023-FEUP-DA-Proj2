@@ -21,7 +21,6 @@ public:
 /* METHODS */
 private:
     double haversine(int src, int dest);
-    std::list<std::pair<int, double>> dfs(int src, vector<vector<double>> &dists);
 
 public:
     // TSP algorithms
