@@ -305,7 +305,7 @@ void Helpy::printPath(std::list<std::pair<int, double>> &path) {
     }
 
     cout << table.to_string();
-    cout << endl << BOLD << "Total distance:" << YELLOW << ' ' << std::setprecision(5) << totalDistance << RESET
+    cout << endl << BOLD << "Total distance:" << YELLOW << ' ' << std::setprecision(7) << totalDistance << RESET
          << endl;
 }
 
@@ -337,7 +337,7 @@ void Helpy::runAlgorithm(int n) {
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    cout << "These are the results of my search: " << endl << endl;
+    cout << "These are the results of my computation: " << endl << endl;
     printPath(res);
 
     cout << BOLD << "Execution time: " << YELLOW << Utils::toTime(duration) << RESET

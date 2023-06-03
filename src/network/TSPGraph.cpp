@@ -94,6 +94,7 @@ std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
 
 /**
  * @brief computes an approximation to the TSP problem, using the triangular inequality heuristic
+ * @complexity O(|V + E| * log|V|)
  * @param distance double which will be store the distance of the best path
  * @return std::list with the indices of the vertices in the order they are visited
  */
@@ -102,6 +103,8 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     auto matrix = toMatrix();
 
     // set up the algorithm
+    resetVertices();
+
     for (Edge *e: edges)
         e->valid = false;
 
