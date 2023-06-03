@@ -103,13 +103,13 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     auto matrix = toMatrix();
 
     // set up the algorithm
-    resetVertices();
-
     for (Edge *e: edges)
         e->valid = false;
 
-    for (Edge *e: MST)
+    for (Edge *e: MST) {
         e->valid = true;
+        (*this)[e->getSrc()].valid = true;
+    }
 
     // compute the path using DFS
     std::list<std::pair<int, double>> path;
