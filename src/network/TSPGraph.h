@@ -22,13 +22,14 @@ public:
 /* METHODS */
 private:
     double haversine(int src, int dest);
-    void twoOpt(std::vector<int> &indices);
+    std::vector<int> nearestNeighbours(int src, double &distance);
+    void twoOpt(std::vector<int> &path, double &distance);
 
 public:
     // TSP algorithms
     std::list<std::pair<int, double>> backtracking(int src);
     std::list<std::pair<int, double>> triangularInequality(int src);
-    std::list<std::pair<int, double>> nearestNeighbour(int src);
+    std::list<std::pair<int, double>> other(int src);
 };
 
 #endif

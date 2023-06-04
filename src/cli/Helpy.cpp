@@ -329,7 +329,7 @@ void Helpy::runAlgorithm(int n) {
             break;
         }
         case (3) : {
-            res = graph.nearestNeighbour(1);
+            res = graph.other(1);
         }
         default : break;
     }

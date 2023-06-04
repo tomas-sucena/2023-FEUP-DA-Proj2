@@ -42,29 +42,74 @@ double TSPGraph::haversine(int src, int dest) {
     return 6371000 * sine; // 6371000 -> Earth's radius (in meters)
 }
 
-void TSPGraph::twoOpt(std::vector<int> &indices){
-    int size = (int) indices.size();
-    int curr = indices.front();
+/**
+ * @brief computes an approximate solution to the TSP, using an implementation of the Nearest-Neighbours algorithm
+ * @complexity O(|V| * |E|)
+ * @param src index of the source vertex
+ * @param distance double where the distance of the computed path will be stored
+ * @return std::vector containing the indices of the vertices in the order they were visited
+ */
+std::vector<int> TSPGraph::nearestNeighbours(int src, double &distance) {
+    std::vector<int> path;
 
-    double currLength = 0;
-    for (int i : indices) {
-        currLength += matrix[curr][i];
-        curr = i;
+    int curr = src;
+    distance = 0;
+
+    while (path.size() < countVertices() - 1) {
+        int nearest;
+        double minDistance = INF;
+
+        (*this)[curr].valid = false;
+
+        for (const Edge *e: (*this)[curr].outEdges()) {
+            int next = e->getDest();
+
+            if (!e->valid || !(*this)[next].valid || e->getWeight() >= minDistance)
+                continue;
+
+            minDistance = e->getWeight();
+            nearest = next;
+        }
+
+        path.emplace_back(nearest);
+
+        curr = nearest;
+        distance += minDistance;
     }
+
+    return path;
+}
+
+/**
+ * @brief optimizes a path, using an implementation of the 2-optimization algorithm
+ * @complexity O(|V|^3)
+ * @param path std::vector containing the path (represented by the indices of the vertices) to be optimized
+ * @param distance double where the distance of the initial path is stored and where the distance of the optimized
+ * path will be stored
+ */
+void TSPGraph::twoOpt(std::vector<int> &path, double &distance){
+    int size = (int) path.size();
 
     bool improved = true;
     while (improved){
         improved = false;
 
-        for (int i = 1; i <= indices.size() - 2; i++) {
-            for (int j = i + 1; j < indices.size() - 1; j++) {
-                double newLength = - matrix[i][(i + 1) % size] - matrix[j][(j + 1) % size]
-                                   + matrix[i][j] + matrix[(i + 1) % size][(j + 1) % size];
+        for (int i = 0; i <= size - 2; ++i) {
+            for (int j = i + 1; j <= size - 1; ++j) {
+                int a = path[i];
+                int b = path[j];
+                int c = path[(i + 1) % size];
+                int d = path[(j + 1) % size];
+                
+                // calculate the new distance
+                double newDistance = - matrix[a][c] - matrix[b][d]
+                                     + matrix[a][b] + matrix[c][d];
 
-                if (newLength >= 0) continue;
-                std::reverse(begin(indices) + i + 1, begin(indices) + j + 1);
+                // check if the new distance is an optimization
+                if (newDistance >= 0) continue;
+                std::reverse(begin(path) + i + 1, begin(path) + j + 1);
 
-                currLength += newLength;
+                distance += newDistance;
                 improved = true;
             }
         }
@@ -182,48 +227,29 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
 
 /**
  * @brief implementation of the Nearest-Neighbour algorithm, which yields an approximation for the TSP
+ * @complexity O(|V| * |E|)
  * @param src index of the source vertex
  * @return std::list representing a path, in which each entry contains the index of a vertex and the distance from the
  * previous vertex to it
  */
-std::list<std::pair<int, double>> TSPGraph::nearestNeighbour(int src) {
+std::list<std::pair<int, double>> TSPGraph::other(int src) {
     if (matrix.empty()) matrix = toMatrix();
-    int curr = src;
 
     // set up the algorithm
     resetAll();
 
-    // execute Nearest-Neighbour to obtain the initial path
-    std::vector<int> indices;
-
-    while (indices.size() < countVertices() - 1) {
-        int nearest;
-        double minDistance = INF;
-
-        (*this)[curr].valid = false;
-
-        for (const Edge *e: (*this)[curr].outEdges()) {
-            int next = e->getDest();
-
-            if (!e->valid || !(*this)[next].valid || e->getWeight() >= minDistance)
-                continue;
-
-            minDistance = e->getWeight();
-            nearest = next;
-        }
-
-        indices.emplace_back(nearest);
-        curr = nearest;
-    }
+    // execute Nearest-Neighbours to obtain the initial path
+    double distance;
+    std::vector<int> initialPath = nearestNeighbours(src, distance);
 
     // use 2-opt to improve the initial path
-    twoOpt(indices);
+    twoOpt(initialPath, distance);
 
     // compute the final path
     std::list<std::pair<int, double>> path;
 
-    curr = src;
-    for (int i : indices) {
+    int curr = src;
+    for (int i : initialPath) {
         path.emplace_back(i, matrix[curr][i]);
         curr = i;
     }
