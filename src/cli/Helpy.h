@@ -13,6 +13,7 @@ private:
     TSPGraph graph;
     Reader reader;
     string pathToRoot;
+    int src;
 
     // maps used to process commands
     static std::map<string, int> command, target, what;
@@ -32,11 +33,13 @@ private:
     void guidedMode();
     bool processCommand(string& s1, string& s2, string& s3);
 
-    static void printPath(std::list<std::pair<int, double>> &path);
+    void printPath(std::list<std::pair<int, double>> &path) const;
     void runAlgorithm(int n);
 
     // commands
-    void changeSelectedGraph();
+    void changeCurrentGraph();
+    void changeCurrentSource();
+    void displayCurrentSource() const;
 
 public:
     void terminal();

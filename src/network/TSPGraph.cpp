@@ -82,7 +82,7 @@ std::vector<int> TSPGraph::nearestNeighbours(int src, double &distance) {
 
 /**
  * @brief optimizes a path, using an implementation of the 2-optimization algorithm
- * @complexity O(|V|^3)
+ * @complexity O(|V|^2)
  * @param path std::vector containing the path (represented by the indices of the vertices) to be optimized
  * @param distance double where the distance of the initial path is stored and where the distance of the optimized
  * path will be stored
@@ -229,7 +229,7 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
 
 /**
  * @brief implementation of the Nearest-Neighbour algorithm, which yields an approximation for the TSP
- * @complexity O(|V| * |E|)
+ * @complexity O(|V|^2) if |V| > |E|, O(|V| * |E|) otherwise
  * @param src index of the source vertex
  * @return std::list representing a path, in which each entry contains the index of a vertex and the distance from the
  * previous vertex to it

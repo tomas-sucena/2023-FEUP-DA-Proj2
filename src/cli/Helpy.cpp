@@ -18,16 +18,19 @@ using std::endl;
 #define BREAK       endl << YELLOW << DASHED_LINE << RESET << endl << endl
 #define YES_NO      " (" << GREEN << "Yes" << RESET << '/' << RED << "No" << RESET << ')'
 
-std::map<string, int> Helpy::command = {{"change", 1}, {"run", 2}};
+std::map<string, int> Helpy::command = {{"change", 1}, {"run", 2}, {"execute", 2}, {"exec", 2},
+                                        {"display", 4}, {"print", 4}};
 
-std::map<string, int> Helpy::target = {{"selected", 4}, {"current", 4}, {"backtracking", 6}, {"approximation", 8}, {"other", 10}};
+std::map<string, int> Helpy::target = {{"selected", 3}, {"current", 3},  {"curr", 3}, {"backtracking", 6},
+                                       {"backtrack", 6}, {"triangular", 9}, {"triangle", 9}, {"other", 12},
+                                       {"our", 12}};
 
-std::map<string, int> Helpy::what = {{"graph", 12}, {"tsp", 15}};
+std::map<string, int> Helpy::what = {{"graph", 5}, {"tsp", 10}, {"source", 15}, {"src", 15}};
 
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() : pathToRoot("../"), reader() {
+Helpy::Helpy() : reader(), pathToRoot("../"), src(1) {
     fetchData("../data/Toy-Graphs/tourism.csv", true);
 }
 
@@ -182,8 +185,8 @@ b2: cout << BREAK;
     }
     else if (s1 == "run"){
         cout << BREAK;
-        cout << "* BackTracking" << endl;
-        cout << "* Approximation" << endl;
+        cout << "* Backtracking" << endl;
+        cout << "* Triangular" << endl;
         cout << "* Other" << endl;
     }
     else if (s1 == "quit" || s1 == "die"){
@@ -201,6 +204,7 @@ b2: cout << BREAK;
     if (s2 == "selected"){
         cout << BREAK;
         cout << "* Graph" << endl;
+        cout << "* Source" << endl;
     }
     else if ((s2 == "approximation") || (s2 == "backtracking") || (s2 == "other")){
         cout << BREAK;
@@ -251,19 +255,27 @@ e2: cout << "See you next time!" << endl << endl;
  */
 bool Helpy::processCommand(string& s1, string& s2, string& s3){
     switch (command[s1] + target[s2] + what[s3]){
-        case(17) : {
-            changeSelectedGraph();
+        case(9) : {
+            changeCurrentGraph();
             break;
         }
-        case(23) : {
+        case(18) : {
             runAlgorithm(1);
             break;
         }
-        case(25) : {
+        case (19) : {
+            changeCurrentSource();
+            break;
+        }
+        case (21) : {
             runAlgorithm(2);
             break;
         }
-        case(27) : {
+        case (22) : {
+            displayCurrentSource();
+            break;
+        }
+        case (24) : {
             runAlgorithm(3);
             break;
         }
@@ -290,10 +302,14 @@ void Helpy::terminal(){
     (readInput(instruction, options) == "guided") ? guidedMode() : advancedMode();
 }
 
-void Helpy::printPath(std::list<std::pair<int, double>> &path) {
+/**
+ * @brief prints a table which represents a solution to the TSP
+ * @param path solution to the TSP to be printed
+ */
+void Helpy::printPath(std::list<std::pair<int, double>> &path) const {
     fort::char_table table = Utils::createTable({"N", "Source", "Destination", "Distance", "Total Distance"});
 
-    int prev = 0, n = 1;
+    int prev = src - 1, n = 1;
     double totalDistance = 0;
 
     for (auto &p : path) {
@@ -321,15 +337,15 @@ void Helpy::runAlgorithm(int n) {
 
     switch (n) {
         case (1) : {
-            res = graph.backtracking(1);
+            res = graph.backtracking(src);
             break;
         }
         case (2) : {
-            res = graph.triangularInequality(1);
+            res = graph.triangularInequality(src);
             break;
         }
         case (3) : {
-            res = graph.other(1);
+            res = graph.other(src);
         }
         default : break;
     }
@@ -347,7 +363,7 @@ void Helpy::runAlgorithm(int n) {
 /**
  * @brief allows the user to change the selected graph
 */
-void Helpy::changeSelectedGraph() {
+void Helpy::changeCurrentGraph() {
     // get the file path
     string path;
 
@@ -379,4 +395,37 @@ void Helpy::changeSelectedGraph() {
     cout << BOLD << GREEN << "Done!" << RESET << " The new graph has successfully been loaded!" << endl << endl;
     cout << BOLD << YELLOW << "Vertices loaded: " << RESET << graph.countVertices()
          << endl << BOLD << YELLOW << "Edges loaded: " << RESET << graph.countEdges() << endl;
+}
+
+/**
+ * @brief allows the user to change the starting vertex of the TSP
+ */
+void Helpy::changeCurrentSource() {
+    std::ostringstream instr;
+    instr << "Please enter the " << BOLD << "index" << RESET << " of the " << BOLD << YELLOW << "vertex" << RESET
+          << " you would like to set as the source:";
+
+    while (true) {
+        int index = (int) readNumber(instr.str()) + 1;
+
+        if (index > 0 && index <= graph.countVertices()) {
+            src = index;
+            break;
+        }
+
+        cout << BREAK;
+        cout << RED << "Invalid index! Please, try again." << RESET << endl;
+    }
+
+    cout << BREAK;
+    cout << BOLD << GREEN << "Done!" << RESET << " The index of the new source vertex is " << BOLD << YELLOW << src - 1
+         << RESET << '.' << endl;
+}
+
+/**
+ * @brief displays the index of the starting vertex of the TSP
+ */
+void Helpy::displayCurrentSource() const {
+    cout << BREAK;
+    cout << "The index of the source vertex is " << BOLD << YELLOW << src - 1 << RESET << '.' << endl;
 }
