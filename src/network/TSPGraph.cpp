@@ -223,8 +223,10 @@ std::list<std::pair<int, double>> TSPGraph::nearestNeighbour(int src) {
     std::list<std::pair<int, double>> path;
 
     curr = src;
-    for (int i = 1; i < (int) indices.size(); curr = i)
-        path.emplace_back(i, matrix[curr][i++]);
+    for (int i : indices) {
+        path.emplace_back(i, matrix[curr][i]);
+        curr = i;
+    }
 
     path.emplace_back(src, matrix[curr][src]);
     return path;
