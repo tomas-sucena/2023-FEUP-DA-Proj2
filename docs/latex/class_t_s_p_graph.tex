@@ -1,0 +1,109 @@
+\hypertarget{class_t_s_p_graph}{}\doxysection{TSPGraph Class Reference}
+\label{class_t_s_p_graph}\index{TSPGraph@{TSPGraph}}
+Inheritance diagram for TSPGraph\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_t_s_p_graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_t_s_p_graph_a3da41a7dabd0ab75a7e88ac6ab4d0493}{TSPGraph}} (bool is\+Real=false)
+\begin{DoxyCompactList}\small\item\em creates a new \mbox{\hyperlink{class_t_s_p_graph}{TSPGraph}} \end{DoxyCompactList}\item 
+std\+::list$<$ std\+::pair$<$ int, double $>$ $>$ \mbox{\hyperlink{class_t_s_p_graph_a8afdb46db726f4c418bf01efdc7789ac}{backtracking}} (int src)
+\begin{DoxyCompactList}\small\item\em computes the solution to the TSP problem, using a brute-\/force backtracking algorithm \end{DoxyCompactList}\item 
+std\+::list$<$ std\+::pair$<$ int, double $>$ $>$ \mbox{\hyperlink{class_t_s_p_graph_ae868246402c1f2596ae33e366063feb2}{triangular\+Inequality}} (int src)
+\begin{DoxyCompactList}\small\item\em computes an approximation to the TSP problem, using the triangular inequality heuristic \end{DoxyCompactList}\item 
+std\+::list$<$ std\+::pair$<$ int, double $>$ $>$ \mbox{\hyperlink{class_t_s_p_graph_a9dfbb3c787d58c57771364880f830581}{other}} (int src)
+\begin{DoxyCompactList}\small\item\em implementation of the Nearest-\/\+Neighbour algorithm, which yields an approximation for the TSP \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_t_s_p_graph_a3da41a7dabd0ab75a7e88ac6ab4d0493}\label{class_t_s_p_graph_a3da41a7dabd0ab75a7e88ac6ab4d0493}} 
+\index{TSPGraph@{TSPGraph}!TSPGraph@{TSPGraph}}
+\index{TSPGraph@{TSPGraph}!TSPGraph@{TSPGraph}}
+\doxysubsubsection{\texorpdfstring{TSPGraph()}{TSPGraph()}}
+{\footnotesize\ttfamily TSPGraph\+::\+TSPGraph (\begin{DoxyParamCaption}\item[{bool}]{is\+Real = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+creates a new \mbox{\hyperlink{class_t_s_p_graph}{TSPGraph}} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+Real} & indicates if the graph represents real world locations \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_t_s_p_graph_a8afdb46db726f4c418bf01efdc7789ac}\label{class_t_s_p_graph_a8afdb46db726f4c418bf01efdc7789ac}} 
+\index{TSPGraph@{TSPGraph}!backtracking@{backtracking}}
+\index{backtracking@{backtracking}!TSPGraph@{TSPGraph}}
+\doxysubsubsection{\texorpdfstring{backtracking()}{backtracking()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::pair$<$ int, double $>$ $>$ TSPGraph\+::backtracking (\begin{DoxyParamCaption}\item[{int}]{src }\end{DoxyParamCaption})}
+
+
+
+computes the solution to the TSP problem, using a brute-\/force backtracking algorithm 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+V$\vert$! $\ast$ $\vert$\+V$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & double which will be store the distance of the best path \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::list representing a path, in which each entry contains the index of a vertex and the distance from the previous vertex to it 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_t_s_p_graph_a9dfbb3c787d58c57771364880f830581}\label{class_t_s_p_graph_a9dfbb3c787d58c57771364880f830581}} 
+\index{TSPGraph@{TSPGraph}!other@{other}}
+\index{other@{other}!TSPGraph@{TSPGraph}}
+\doxysubsubsection{\texorpdfstring{other()}{other()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::pair$<$ int, double $>$ $>$ TSPGraph\+::other (\begin{DoxyParamCaption}\item[{int}]{src }\end{DoxyParamCaption})}
+
+
+
+implementation of the Nearest-\/\+Neighbour algorithm, which yields an approximation for the TSP 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$\+V$\vert$$^\wedge$2) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em src} & index of the source vertex \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::list representing a path, in which each entry contains the index of a vertex and the distance from the previous vertex to it 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_t_s_p_graph_ae868246402c1f2596ae33e366063feb2}\label{class_t_s_p_graph_ae868246402c1f2596ae33e366063feb2}} 
+\index{TSPGraph@{TSPGraph}!triangularInequality@{triangularInequality}}
+\index{triangularInequality@{triangularInequality}!TSPGraph@{TSPGraph}}
+\doxysubsubsection{\texorpdfstring{triangularInequality()}{triangularInequality()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::pair$<$ int, double $>$ $>$ TSPGraph\+::triangular\+Inequality (\begin{DoxyParamCaption}\item[{int}]{src }\end{DoxyParamCaption})}
+
+
+
+computes an approximation to the TSP problem, using the triangular inequality heuristic 
+
+\begin{DoxyParagraph}{Time Complexity\+:}
+O($\vert$V + E$\vert$ $\ast$ log$\vert$\+V$\vert$) 
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & double which will be store the distance of the best path \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::list representing a path, in which each entry contains the index of a vertex and the distance from the previous vertex to it 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+TSPGraph.\+h\item 
+TSPGraph.\+cpp\end{DoxyCompactItemize}

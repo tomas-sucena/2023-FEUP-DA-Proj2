@@ -1,0 +1,57 @@
+\hypertarget{_helpy_8h_source}{}\doxysection{Helpy.\+h}
+\label{_helpy_8h_source}\index{Helpy.h@{Helpy.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DA\_TRAINS\_HELPY\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DA\_TRAINS\_HELPY\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../utils/Reader.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../utils/Utils.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../network/TSPGraph.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_helpy}{Helpy}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{comment}{/*\ ATTRIBUTES\ */}}
+\DoxyCodeLine{00012\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{class_t_s_p_graph}{TSPGraph}}\ graph;}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{class_reader}{Reader}}\ reader;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{string}\ pathToRoot;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{int}\ src;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ multithreading,\ loading;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ maps\ used\ to\ process\ commands}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ std::map<string,\ int>\ command,\ target,\ what;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{/*\ CONSTRUCTOR\ */}}
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{class_helpy_a8bab5605460bfb9911281ba3327df1c2}{Helpy}}();}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*\ METHODS\ */}}
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ fetchData(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ hasHeader);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ readInput(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ instruction,\ uSet<string>\&\ options);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ readNumber(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ instruction);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ advancedMode();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ guidedMode();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ processCommand(\textcolor{keywordtype}{string}\&\ s1,\ \textcolor{keywordtype}{string}\&\ s2,\ \textcolor{keywordtype}{string}\&\ s3);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ printPath(std::list<std::pair<int,\ double>>\ \&path);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ printLoadingScreen()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ runAlgorithm(\textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ commands}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ changeCurrentGraph();}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ changeCurrentSource();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ displayCurrentSource()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ toggleMultithreading();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_helpy_aaa754efec4177b0c763859b5847d10d3}{terminal}}();}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

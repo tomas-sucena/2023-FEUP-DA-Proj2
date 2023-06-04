@@ -44,7 +44,7 @@ double TSPGraph::haversine(int src, int dest) {
 
 /**
  * @brief computes an approximate solution to the TSP, using an implementation of the Nearest-Neighbours algorithm
- * @complexity O(|V| * |E|)
+ * @complexity O(|V| + |E|)
  * @param src index of the source vertex
  * @param distance double where the distance of the computed path will be stored
  * @return std::vector containing the indices of the vertices in the order they were visited
@@ -229,7 +229,7 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
 
 /**
  * @brief implementation of the Nearest-Neighbour algorithm, which yields an approximation for the TSP
- * @complexity O(|V|^2) if |V| > |E|, O(|V| * |E|) otherwise
+ * @complexity O(|V|^2)
  * @param src index of the source vertex
  * @return std::list representing a path, in which each entry contains the index of a vertex and the distance from the
  * previous vertex to it

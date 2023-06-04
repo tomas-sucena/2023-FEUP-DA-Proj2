@@ -1,0 +1,36 @@
+\hypertarget{_reader_8h_source}{}\doxysection{Reader.\+h}
+\label{_reader_8h_source}\index{Reader.h@{Reader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DA\_PROJ2\_READER\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DA\_PROJ2\_READER\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Utils.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}../network/TSPGraph.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_reader}{Reader}}\ \{}
+\DoxyCodeLine{00010\ \textcolor{comment}{/*\ ATTRIBUTES\ */}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{comment}{//\ for\ reading}}
+\DoxyCodeLine{00013\ \ \ \ \ std::ifstream\ reader;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{char}\ valueDelim,\ lineDelim;\ \textcolor{comment}{//\ delimiters}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*\ CONSTRUCTOR\ */}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_reader}{Reader}}(\textcolor{keywordtype}{char}\ valueDelim\ =\ \textcolor{charliteral}{','},\ \textcolor{keywordtype}{char}\ lineDelim\ =\ \textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{/*\ METHODS\ */}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ extractValue(std::string::iterator\&\ lineIt,\ std::string\&\ value,\ \textcolor{keywordtype}{char}\ delim);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ readVertices(\mbox{\hyperlink{class_t_s_p_graph}{TSPGraph}}\ \&g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ hasHeader);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ readEdges(\mbox{\hyperlink{class_t_s_p_graph}{TSPGraph}}\ \&g,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ hasHeader);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{class_t_s_p_graph}{TSPGraph}}\ \mbox{\hyperlink{class_reader_a2552d2ec31cc3f21f110d8d55b7b1bf7}{read}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ hasHeader);}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DA\_PROJ2\_READER\_H}}
+
+\end{DoxyCode}
