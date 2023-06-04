@@ -14,7 +14,7 @@ private:
     Reader reader;
     string pathToRoot;
     int src;
-    bool loading;
+    bool multithreading, loading;
 
     // maps used to process commands
     static std::map<string, int> command, target, what;
@@ -42,6 +42,7 @@ private:
     void changeCurrentGraph();
     void changeCurrentSource();
     void displayCurrentSource() const;
+    void toggleMultithreading();
 
 public:
     void terminal();

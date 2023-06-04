@@ -21,18 +21,18 @@ using std::endl;
 #define YES_NO      " (" << GREEN << "Yes" << RESET << '/' << RED << "No" << RESET << ')'
 
 std::map<string, int> Helpy::command = {{"change", 1}, {"run", 2}, {"execute", 2}, {"exec", 2},
-                                        {"display", 4}, {"print", 4}};
+                                        {"display", 4}, {"print", 4}, {"toggle", 8}};
 
 std::map<string, int> Helpy::target = {{"selected", 3}, {"current", 3},  {"curr", 3}, {"backtracking", 6},
                                        {"backtrack", 6}, {"triangular", 9}, {"triangle", 9}, {"other", 12},
-                                       {"our", 12}};
+                                       {"our", 12}, {"multithreading", 15}, {"threads", 15}, {"loading", 15}};
 
 std::map<string, int> Helpy::what = {{"graph", 5}, {"tsp", 10}, {"source", 15}, {"src", 15}};
 
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() : reader(), pathToRoot("../"), src(1), loading(false) {
+Helpy::Helpy() : reader(), pathToRoot("../"), src(1), multithreading(true), loading(false) {
     fetchData("../data/Toy-Graphs/tourism.csv", true);
 }
 
@@ -140,10 +140,13 @@ b1: cout << BREAK;
     std::cin >> s2;
     Utils::lowercase(s2);
 
+    if (target[s1] == target["toggle"] && target[s2] == target["multithreading"])
+        goto p1;
+
     std::cin >> s3;
     Utils::lowercase(s3);
 
-    if (!processCommand(s1, s2, s3)){
+p1: if (!processCommand(s1, s2, s3)){
         goto b1;
     }
 
@@ -173,7 +176,9 @@ b2: cout << BREAK;
     cout << "Hello! How can I be of assistance?" << endl;
     cout << endl;
     cout << "* Change" << endl;
+    cout << "* Display" << endl;
     cout << "* Run" << endl;
+    cout << "* Toggle" << endl;
     cout << endl;
 
     string s1, s2, s3;
@@ -181,17 +186,21 @@ b2: cout << BREAK;
 
     std::cin >> s1; Utils::lowercase(s1);
 
-    if (s1 == "change"){
+    if (s1 == "change" || s1 == "display") {
         cout << BREAK;
-        cout << "* Selected" << endl;
+        cout << "* Current" << endl;
     }
-    else if (s1 == "run"){
+    else if (s1 == "run") {
         cout << BREAK;
         cout << "* Backtracking" << endl;
         cout << "* Triangular" << endl;
         cout << "* Other" << endl;
     }
-    else if (s1 == "quit" || s1 == "die"){
+    else if (s1 == "toggle") {
+        cout << BREAK;
+        cout << "* Multithreading" << endl;
+    }
+    else if (s1 == "quit" || s1 == "die") {
         goto e2;
     }
     else { // error
@@ -203,19 +212,22 @@ b2: cout << BREAK;
 
     std::cin >> s2; Utils::lowercase(s2);
 
-    if (s2 == "selected"){
+    if (s2 == "current") {
         cout << BREAK;
-        cout << "* Graph" << endl;
+        if (s1 != "display") cout << "* Graph" << endl;
         cout << "* Source" << endl;
     }
-    else if ((s2 == "approximation") || (s2 == "backtracking") || (s2 == "other")){
+    else if ((s2 == "approximation") || (s2 == "backtracking") || (s2 == "other")) {
         cout << BREAK;
         cout << "* TSP" << endl;
     }
-    else if (s2 == "quit" || s2 == "die"){
+    else if (s2 == "multithreading") {
+        goto p1;
+    }
+    else if (s2 == "quit" || s2 == "die") {
         goto e2;
     }
-    else{ // error
+    else { // error
         processCommand(s1, s2, s3);
         goto b2;
     }
@@ -223,11 +235,11 @@ b2: cout << BREAK;
     cout << endl;
     std::cin >> s3; Utils::lowercase(s3);
 
-    if (s3 == "quit" || s3 == "die"){
+    if (s3 == "quit" || s3 == "die") {
         goto e2;
     }
 
-    if (!processCommand(s1, s2, s3)){
+p1: if (!processCommand(s1, s2, s3)) {
         goto b2;
     }
 
@@ -277,6 +289,10 @@ bool Helpy::processCommand(string& s1, string& s2, string& s3){
             displayCurrentSource();
             break;
         }
+        case (23) : {
+            toggleMultithreading();
+            break;
+        }
         case (24) : {
             runAlgorithm(3);
             break;
@@ -322,9 +338,8 @@ void Helpy::printPath(std::list<std::pair<int, double>> &path) {
         prev = p.first - 1;
     }
 
-    cout << table.to_string();
-    cout << endl << BOLD << "Total distance: " << YELLOW << totalDistance << " m" << RESET
-         << endl;
+    cout << table.to_string() << endl;
+    cout << BOLD << "Total distance: " << YELLOW << totalDistance << " m" << RESET << endl;
 }
 
 /**
@@ -359,8 +374,12 @@ void Helpy::printLoadingScreen() const {
  */
 void Helpy::runAlgorithm(int n) {
     // create a new thread to show a loading screen
-    loading = true;
-    std::thread t1(&Helpy::printLoadingScreen, this);
+    std::thread *t1 = nullptr;
+
+    if (multithreading) {
+        loading = true;
+        t1 = new std::thread(&Helpy::printLoadingScreen, this);
+    }
 
     std::list<std::pair<int, double>> res;
     auto start = std::chrono::high_resolution_clock::now();
@@ -380,8 +399,12 @@ void Helpy::runAlgorithm(int n) {
         default : break;
     }
 
-    loading = false;
-    t1.join();
+    if (multithreading) {
+        loading = false;
+        t1->join();
+
+        delete t1;
+    }
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
@@ -403,8 +426,9 @@ void Helpy::changeCurrentGraph() {
 
     while (true) {
         cout << BREAK;
-        cout << "Please type the " << BOLD << "relative path" << RESET << " to the directory where the "
-             << BOLD << YELLOW << "data file" << RESET << " is located:" << endl << endl;
+        cout << "Please type the " << BOLD << "relative path" << RESET << " to one of the following:" << endl << endl;
+        cout << "* " << BOLD << YELLOW << "File" << RESET << endl
+             << "* " << BOLD << YELLOW << "Directory" << endl << endl;
 
         getline(std::cin >> std::ws, path);
         path.insert(0, pathToRoot);
@@ -424,18 +448,26 @@ void Helpy::changeCurrentGraph() {
     bool hasHeader = (readInput(instr.str(), options) == "yes");
 
     // create a new thread to show a loading screen
-    loading = true;
-    std::thread t1(&Helpy::printLoadingScreen, this);
+    std::thread *t1 = nullptr;
+
+    if (multithreading) {
+        loading = true;
+        t1 = new std::thread(&Helpy::printLoadingScreen, this);
+    }
 
     fetchData(path, hasHeader);
-    loading = false;
 
-    t1.join();
+    if (multithreading) {
+        loading = false;
+        t1->join();
+
+        delete t1;
+    }
 
     cout << BREAK;
     cout << BOLD << GREEN << "Done!" << RESET << " The new graph has successfully been loaded!" << endl << endl;
-    cout << BOLD << YELLOW << "Vertices loaded: " << RESET << graph.countVertices()
-         << endl << BOLD << YELLOW << "Edges loaded: " << RESET << graph.countEdges() << endl;
+    cout << BOLD << YELLOW << "Vertices loaded: " << RESET << graph.countVertices() << endl
+         << BOLD << YELLOW << "Edges loaded: " << RESET << graph.countEdges() << endl;
 }
 
 /**
@@ -470,4 +502,12 @@ void Helpy::displayCurrentSource() const {
     cout << BREAK;
     cout << "The " << BOLD << "index" << RESET << " of the source vertex is " << BOLD << YELLOW << src - 1 << RESET
          << '.' << endl;
+}
+
+void Helpy::toggleMultithreading() {
+    multithreading ^= 1;
+
+    cout << BREAK;
+    cout << BOLD << GREEN << "Done! " << RESET << "Multithreading is now " << BOLD << YELLOW
+         << (multithreading ? "enabled" : "disabled") << RESET << '.' << endl;
 }
