@@ -504,6 +504,9 @@ void Helpy::displayCurrentSource() const {
          << '.' << endl;
 }
 
+/**
+ * @brief allows the user to toggle multithreading on/off and, in doing so, enabling/disabling the loading screen
+ */
 void Helpy::toggleMultithreading() {
     multithreading ^= 1;
 
