@@ -42,11 +42,41 @@ double TSPGraph::haversine(int src, int dest) {
     return 6371000 * sine; // 6371000 -> Earth's radius (in meters)
 }
 
+void TSPGraph::twoOpt(std::vector<int> &indices){
+    int size = (int) indices.size();
+    int curr = indices.front();
+
+    double currLength = 0;
+    for (int i : indices) {
+        currLength += matrix[curr][i];
+        curr = i;
+    }
+
+    bool improved = true;
+    while (improved){
+        improved = false;
+
+        for (int i = 1; i <= indices.size() - 2; i++) {
+            for (int j = i + 1; j < indices.size() - 1; j++) {
+                double newLength = - matrix[i][(i + 1) % size] - matrix[j][(j + 1) % size]
+                                   + matrix[i][j] + matrix[(i + 1) % size][(j + 1) % size];
+
+                if (newLength >= 0) continue;
+                std::reverse(begin(indices) + i + 1, begin(indices) + j + 1);
+
+                currLength += newLength;
+                improved = true;
+            }
+        }
+    }
+}
+
 /**
  * @brief computes the solution to the TSP problem, using a brute-force backtracking algorithm
  * @complexity O(|V|! * |V|)
  * @param distance double which will be store the distance of the best path
- * @return std::list with the indices of the vertices in the order they are visited
+ * @return std::list representing a path, in which each entry contains the index of a vertex and the distance from the
+ * previous vertex to it
  */
 std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
     std::list<std::pair<int, double>> bestPath;
@@ -56,7 +86,7 @@ std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
     for (int i = 1; i <= countVertices(); ++i)
         if (i != src) indices.push_back(i);
 
-    auto matrix = toMatrix();
+    if (matrix.empty()) matrix = toMatrix();
 
     do {
         int prev = src;
@@ -96,11 +126,12 @@ std::list<std::pair<int, double>> TSPGraph::backtracking(int src){
  * @brief computes an approximation to the TSP problem, using the triangular inequality heuristic
  * @complexity O(|V + E| * log|V|)
  * @param distance double which will be store the distance of the best path
- * @return std::list with the indices of the vertices in the order they are visited
+ * @return std::list representing a path, in which each entry contains the index of a vertex and the distance from the
+ * previous vertex to it
  */
 std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     std::list<Edge *> MST = getMST(src);
-    auto matrix = toMatrix();
+    if (matrix.empty()) matrix = toMatrix();
 
     // set up the algorithm
     for (Edge *e: edges)
@@ -149,62 +180,23 @@ std::list<std::pair<int, double>> TSPGraph::triangularInequality(int src) {
     return path;
 }
 
-
-void twooptswap(std::list<std::pair<int, double>> path, int i, int j){
-    std::reverse(begin(path) + i + 1, begin(path) + j + 1);
-}
-
-
-void TSPGraph::twoopt(std::vector<Edge*> path){
-    auto matrix = toMatrix();
-    double curLenght = 0;
-    for(auto i : path){
-        curLenght += i->getWeight();
-    }
-    int size = path.size();
-    double (TSPGraph::*dist)(int, int) = isReal ? &TSPGraph::haversine : &TSPGraph::distance;
-    bool improved = true;
-    while(improved){
-        improved = false;
-        for(int i = 0;  i<= size-2; i++){
-            for(int j = i + 1; j < size-1;j++){
-                if(matrix[i][(i+1)%size] < 0){
-                    matrix[i][(i+1)%size] = (this->*dist)(i, (i+1)%size);
-                }
-                if(matrix[j][(j+1)%size] < 0){
-                    matrix[j][(j+1)%size] = (this->*dist)(j, (j+1)%size);
-                }
-                if(matrix[i][j] < 0){
-                    matrix[i][j] = (this->*dist)(i, j);
-                }
-                if(matrix[(i+1) % size][(j+1)%size] < 0){
-                    matrix[(i+1) % size][(j+1) % size] = (this->*dist)((i+1)%size, (j+1)%size);
-                }
-
-                double newLenght = - matrix[i][(i+1)%size] - matrix[j][(j+1)%size] + matrix[i][j] + matrix[(i+1) % size][(j+1)%size];
-
-                if(newLenght < 0){
-                    twooptswap(path, i, j);
-                    curLenght += newLenght;
-                    improved = true;
-                }
-            }
-        }
-    }
-
-    return;
-}
+/**
+ * @brief implementation of the Nearest-Neighbour algorithm, which yields an approximation for the TSP
+ * @param src index of the source vertex
+ * @return std::list representing a path, in which each entry contains the index of a vertex and the distance from the
+ * previous vertex to it
+ */
 std::list<std::pair<int, double>> TSPGraph::nearestNeighbour(int src) {
-    std::list<std::pair<int, double>> path;
-
-    auto matrix = toMatrix();
+    if (matrix.empty()) matrix = toMatrix();
     int curr = src;
 
     // set up the algorithm
     resetAll();
 
-    // compute the path
-    while (path.size() < countVertices() - 1) {
+    // execute Nearest-Neighbour to obtain the initial path
+    std::vector<int> indices;
+
+    while (indices.size() < countVertices() - 1) {
         int nearest;
         double minDistance = INF;
 
@@ -220,9 +212,19 @@ std::list<std::pair<int, double>> TSPGraph::nearestNeighbour(int src) {
             nearest = next;
         }
 
-        path.emplace_back(nearest, minDistance);
+        indices.emplace_back(nearest);
         curr = nearest;
     }
+
+    // use 2-opt to improve the initial path
+    twoOpt(indices);
+
+    // compute the final path
+    std::list<std::pair<int, double>> path;
+
+    curr = src;
+    for (int i = 1; i < (int) indices.size(); curr = i)
+        path.emplace_back(i, matrix[curr][i++]);
 
     path.emplace_back(src, matrix[curr][src]);
     return path;

@@ -305,7 +305,7 @@ void Helpy::printPath(std::list<std::pair<int, double>> &path) {
     }
 
     cout << table.to_string();
-    cout << endl << BOLD << "Total distance:" << YELLOW << ' ' << std::setprecision(7) << totalDistance << RESET
+    cout << endl << BOLD << "Total distance: " << YELLOW << std::setprecision(7) << totalDistance << " m" << RESET
          << endl;
 }
 

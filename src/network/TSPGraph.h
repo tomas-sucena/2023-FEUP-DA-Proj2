@@ -1,5 +1,5 @@
-#ifndef DA_PROJ2_DATAGRAPH
-#define DA_PROJ2_DATAGRAPH
+#ifndef DA_PROJ2_TSPGRAPH
+#define DA_PROJ2_TSPGRAPH
 
 #include <list>
 #include <vector>
@@ -12,6 +12,7 @@ using std::vector;
 class TSPGraph : public UGraph {
 /* ATTRIBUTES */
 private:
+    vector<vector<double>> matrix;
     bool isReal;
 
 /* CONSTRUCTOR */
@@ -21,13 +22,13 @@ public:
 /* METHODS */
 private:
     double haversine(int src, int dest);
+    void twoOpt(std::vector<int> &indices);
 
 public:
     // TSP algorithms
     std::list<std::pair<int, double>> backtracking(int src);
     std::list<std::pair<int, double>> triangularInequality(int src);
     std::list<std::pair<int, double>> nearestNeighbour(int src);
-    void twoopt(std::vector<Edge*> path);
 };
 
 #endif
