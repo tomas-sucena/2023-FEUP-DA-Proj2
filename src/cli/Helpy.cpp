@@ -1,5 +1,7 @@
 #include <chrono>
 #include <unistd.h>
+#include <thread>
+
 #include "Helpy.h"
 
 using std::cout;
@@ -30,14 +32,14 @@ std::map<string, int> Helpy::what = {{"graph", 5}, {"tsp", 10}, {"source", 15}, 
 /**
  * @brief creates a new Helpy object
  */
-Helpy::Helpy() : reader(), pathToRoot("../"), src(1) {
+Helpy::Helpy() : reader(), pathToRoot("../"), src(1), loading(false) {
     fetchData("../data/Toy-Graphs/tourism.csv", true);
 }
 
 /**
  * @brief reads and parses the data files, creating a graph that accurately models them
  * @param path path to the file/directory where the data is stored
- * @param twoFiles indicates if the files are split into two files (edges.csv and nodes.csv) or not
+ * @param twoFiles indicates if the data is split into two files (edges.csv and nodes.csv) or not
  */
 void Helpy::fetchData(const string& path, bool hasHeader) {
     graph = reader.read(path, hasHeader);
@@ -306,10 +308,10 @@ void Helpy::terminal(){
  * @brief prints a table which represents a solution to the TSP
  * @param path solution to the TSP to be printed
  */
-void Helpy::printPath(std::list<std::pair<int, double>> &path) const {
+void Helpy::printPath(std::list<std::pair<int, double>> &path) {
     fort::char_table table = Utils::createTable({"N", "Source", "Destination", "Distance", "Total Distance"});
 
-    int prev = src - 1, n = 1;
+    int prev = path.back().first - 1, n = 1;
     double totalDistance = 0;
 
     for (auto &p : path) {
@@ -321,8 +323,34 @@ void Helpy::printPath(std::list<std::pair<int, double>> &path) const {
     }
 
     cout << table.to_string();
-    cout << endl << BOLD << "Total distance: " << YELLOW << std::setprecision(7) << totalDistance << " m" << RESET
+    cout << endl << BOLD << "Total distance: " << YELLOW << totalDistance << " m" << RESET
          << endl;
+}
+
+/**
+ * @brief prints a loading screen
+ */
+void Helpy::printLoadingScreen() const {
+    int dots = 0;
+
+    cout << BREAK;
+    cout << BLUE << "Loading" << std::flush;
+
+    while (loading) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+        if (dots < 3) {
+            cout << '.' << std::flush;
+            ++dots;
+
+            continue;
+        }
+
+        cout << "\rLoading" << std::flush;
+        dots = 0;
+    }
+
+    cout << RESET << '\r' << endl;
 }
 
 /**
@@ -330,7 +358,9 @@ void Helpy::printPath(std::list<std::pair<int, double>> &path) const {
  * @param n number that indicates which algorithm should be executed
  */
 void Helpy::runAlgorithm(int n) {
-    cout << BREAK;
+    // create a new thread to show a loading screen
+    loading = true;
+    std::thread t1(&Helpy::printLoadingScreen, this);
 
     std::list<std::pair<int, double>> res;
     auto start = std::chrono::high_resolution_clock::now();
@@ -350,9 +380,13 @@ void Helpy::runAlgorithm(int n) {
         default : break;
     }
 
+    loading = false;
+    t1.join();
+
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
+    cout << BREAK;
     cout << "These are the results of my computation: " << endl << endl;
     printPath(res);
 
@@ -389,7 +423,14 @@ void Helpy::changeCurrentGraph() {
     uSet<string> options = {"yes", "no"};
     bool hasHeader = (readInput(instr.str(), options) == "yes");
 
+    // create a new thread to show a loading screen
+    loading = true;
+    std::thread t1(&Helpy::printLoadingScreen, this);
+
     fetchData(path, hasHeader);
+    loading = false;
+
+    t1.join();
 
     cout << BREAK;
     cout << BOLD << GREEN << "Done!" << RESET << " The new graph has successfully been loaded!" << endl << endl;
@@ -418,8 +459,8 @@ void Helpy::changeCurrentSource() {
     }
 
     cout << BREAK;
-    cout << BOLD << GREEN << "Done!" << RESET << " The index of the new source vertex is " << BOLD << YELLOW << src - 1
-         << RESET << '.' << endl;
+    cout << BOLD << GREEN << "Done!" << RESET << " The " << BOLD << "index" << RESET << " of the new source vertex is "
+         << BOLD << YELLOW << src - 1 << RESET << '.' << endl;
 }
 
 /**
@@ -427,5 +468,6 @@ void Helpy::changeCurrentSource() {
  */
 void Helpy::displayCurrentSource() const {
     cout << BREAK;
-    cout << "The index of the source vertex is " << BOLD << YELLOW << src - 1 << RESET << '.' << endl;
+    cout << "The " << BOLD << "index" << RESET << " of the source vertex is " << BOLD << YELLOW << src - 1 << RESET
+         << '.' << endl;
 }

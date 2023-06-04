@@ -11,10 +11,10 @@
 TSPGraph::TSPGraph(bool isReal) : UGraph(0), isReal(isReal) {}
 
 /**
- * @brief calculates the great-circle distance between two vertices, using Haversine's formula
+ * @brief calculates the great-circle distance between two vertices, using the Haversine formula
  * @param src index of the source vertex
  * @param dest index of the destination vertex
- * @return distance between the two vertices
+ * @return distance between the two vertices (in meters)
  */
 double TSPGraph::haversine(int src, int dest) {
     if (!isReal) return INF;
