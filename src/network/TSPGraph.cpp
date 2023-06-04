@@ -94,22 +94,24 @@ void TSPGraph::twoOpt(std::vector<int> &path, double &distance){
     while (improved){
         improved = false;
 
-        for (int i = 0; i <= size - 2; ++i) {
-            for (int j = i + 1; j <= size - 1; ++j) {
+        for (int i = 0; i < size - 1; ++i) {
+            for (int j = i + 1; j < size; ++j) {
                 int a = path[i];
-                int b = path[j];
-                int c = path[(i + 1) % size];
+                int b = path[(i + 1) % size];
+                int c = path[j];
                 int d = path[(j + 1) % size];
-                
+
+                // calculate the current distance
+                double currDistance = matrix[a][b] + matrix[c][d];
+
                 // calculate the new distance
-                double newDistance = - matrix[a][c] - matrix[b][d]
-                                     + matrix[a][b] + matrix[c][d];
+                double newDistance = matrix[a][c] + matrix[b][d];
 
                 // check if the new distance is an optimization
-                if (newDistance >= 0) continue;
-                std::reverse(begin(path) + i + 1, begin(path) + j + 1);
+                if (newDistance >= currDistance) continue;
+                std::reverse(path.begin() + i + 1, path.begin() + j + 1);
 
-                distance += newDistance;
+                distance += newDistance - currDistance;
                 improved = true;
             }
         }
@@ -242,7 +244,7 @@ std::list<std::pair<int, double>> TSPGraph::other(int src) {
     double distance;
     std::vector<int> initialPath = nearestNeighbours(src, distance);
 
-    // use 2-opt to improve the initial path
+    // use 2-opt to optimize the path
     twoOpt(initialPath, distance);
 
     // compute the final path
