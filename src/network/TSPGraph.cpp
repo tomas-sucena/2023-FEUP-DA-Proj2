@@ -25,8 +25,8 @@ double TSPGraph::haversine(int src, int dest) {
     double srcLat = lhs.getLatitude();
     double destLat = rhs.getLatitude();
 
-    double dLat = (rhs.getLatitude() - lhs.getLatitude());
-    double dLong = (rhs.getLongitude() - lhs.getLongitude());
+    double dLat = rhs.getLatitude() - lhs.getLatitude();
+    double dLong = rhs.getLongitude() - lhs.getLongitude();
 
     // convert to radians
     srcLat *= M_PI / 180;
@@ -37,7 +37,7 @@ double TSPGraph::haversine(int src, int dest) {
     // apply formula
     double haver = pow(sin(dLat / 2), 2) + pow(sin(dLong / 2), 2) *
                    cos(srcLat) * cos(destLat);
-    double sine = 2 * asin(sqrt(haver));
+    double sine = 2 * atan2(sqrt(haver), sqrt(1 - haver));
 
     return 6371000 * sine; // 6371000 -> Earth's radius (in meters)
 }
