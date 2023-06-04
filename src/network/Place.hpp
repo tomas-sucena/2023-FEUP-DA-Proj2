@@ -17,22 +17,24 @@ class Place : public Vertex {
         Place(double latitude, double longitude) : latitude(latitude), longitude(longitude) {}
 
         /**
-         * @brief creates a copy of the Station
-         * @return pointer to a copy of the Station
+         * @brief creates a copy of the Place
+         * @return pointer to a copy of the Place
          */
         Vertex* clone() const override{
             return new Place(*this);
         }
 
         /**
-         * @brief getter for Place latitude
+         * @brief returns the latitude of the Place
+         * @return latitude of the Place
         */
         double getLatitude() const{
             return latitude;
         }
 
         /**
-         * @brief getter for Place longitude
+         * @brief returns the longitude of the Place
+         * @return longitude of the Place
         */
         double getLongitude() const{
             return longitude;

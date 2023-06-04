@@ -395,7 +395,7 @@ void Helpy::runAlgorithm(int n) {
 }
 
 /**
- * @brief allows the user to change the selected graph
+ * @brief allows the user to change the graph where the TSP algorithms will be executed
 */
 void Helpy::changeCurrentGraph() {
     // get the file path
